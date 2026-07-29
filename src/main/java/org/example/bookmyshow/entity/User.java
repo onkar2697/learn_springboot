@@ -1,6 +1,7 @@
 package org.example.bookmyshow.entity;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 
 
@@ -8,7 +9,8 @@ import jakarta.persistence.Id;
 public class User {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)  // this we used to generate sequential ids
+    //Let mysql/database generate the ids
     private long  id;
     private String name;
     private String email;
