@@ -30,8 +30,6 @@ public class UserController {
         return service.getUserById(id);
     }
 
-    @GetMapping("/")
-
     @PostMapping
     public User saveUser(@RequestBody User user){
         return service.saveUser(user);
