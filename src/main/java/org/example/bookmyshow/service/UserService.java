@@ -10,9 +10,9 @@ import java.util.Optional;
 
 @Service
 public class UserService {
-    public String welcomeMessage(){
-        return "Welcome to Book My Show!";
-    }
+//    public String welcomeMessage(){
+//        return "Welcome to Book My Show!";
+//    }
 
     public List<User> getAllUsers(){
 
@@ -30,13 +30,14 @@ public class UserService {
         return userRepository.save(user);
     }
 
-    public User getUserById(Long id) {
-        Optional<User> optionalUser = userRepository.findById(id);
+    public User getUserById(Long id){
+//        Optional<User> optionalUser = userRepository.findById(id);
+//
+//        if(optionalUser.isPresent()){
+//            return optionalUser.get();
+//        }
+//       return null;
+       return userRepository.findById(id).orElse(null); // Return a new empty User object if the user doesn't exist.
 
-        if (optionalUser.isPresent()) {
-            return optionalUser.get();
-        }
-
-        return null;   // We'll improve this later
     }
 }
