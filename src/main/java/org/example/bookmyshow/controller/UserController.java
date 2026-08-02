@@ -15,11 +15,6 @@ public class UserController {
         this.service = service;
     }
 
-//    @GetMapping
-//    public String getUser(){
-//        return service.welcomeMessage();
-//        //return "Hello Welcome to the bookmyshow controller";
-//    }
       @GetMapping
       public List<User> getUsers() {
           return service.getAllUsers();
