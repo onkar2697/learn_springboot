@@ -9,8 +9,8 @@ import jakarta.persistence.Id;
 public class User {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)  // this we used to generate sequential ids
-    //Let mysql/database generate the ids
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    //Let mysql/database generate the ids it generates id sequestially
     private long  id;
     private String name;
     private String email;
