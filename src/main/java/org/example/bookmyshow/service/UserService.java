@@ -37,7 +37,42 @@ public class UserService {
 //            return optionalUser.get();
 //        }
 //       return null;
-       return userRepository.findById(id).orElse(null); // Return a new empty User object if the user doesn't exist.
+       return userRepository.findById(id).orElse(null);
+       // Return a new empty User object if the user doesn't exist.
+    }
+
+    public User updateUser(Long id, User user) {
+
+        Optional<User> optionalUser = userRepository.findById(id);
+
+        if (optionalUser.isPresent()) {
+
+            User existingUser = optionalUser.get();
+//            System.out.println("5. Existing name: " + existingUser.getName());
+//            System.out.println("6. Existing email: " + existingUser.getEmail());
+
+            existingUser.setName(user.getName());
+            existingUser.setEmail(user.getEmail());
+
+//            System.out.println("7. New name: " + existingUser.getName());
+//            System.out.println("8. New email: " + existingUser.getEmail());
+
+            User savedUser = userRepository.save(existingUser);
+//            System.out.println("9. Saved user: " + savedUser.getName());
+
+            return savedUser;
+        }
+
+        System.out.println("10. User NOT FOUND");
+
+        return null;
+    }
+
+    public void deleteUser(Long id){
+        Optional<User> optionalUser = userRepository.findById(id);
+        if (optionalUser.isPresent()) {
+            userRepository.delete(optionalUser.get());
+        }
 
     }
 }
