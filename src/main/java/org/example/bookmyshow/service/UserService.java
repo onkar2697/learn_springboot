@@ -51,17 +51,11 @@ public class UserService {
         if (optionalUser.isPresent()) {
 
             User existingUser = optionalUser.get();
-//            System.out.println("5. Existing name: " + existingUser.getName());
-//            System.out.println("6. Existing email: " + existingUser.getEmail());
 
             existingUser.setName(user.getName());
             existingUser.setEmail(user.getEmail());
 
-//            System.out.println("7. New name: " + existingUser.getName());
-//            System.out.println("8. New email: " + existingUser.getEmail());
-
             User savedUser = userRepository.save(existingUser);
-//            System.out.println("9. Saved user: " + savedUser.getName());
 
             return savedUser;
         }
