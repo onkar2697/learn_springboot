@@ -2,6 +2,7 @@ package org.example.bookmyshow.service;
 
 
 import org.example.bookmyshow.entity.User;
+import org.example.bookmyshow.exception.UserNotFoundException;
 import org.example.bookmyshow.repository.UserRepository;
 import org.springframework.stereotype.Service;
 
@@ -37,7 +38,9 @@ public class UserService {
 //            return optionalUser.get();
 //        }
 //       return null;
-       return userRepository.findById(id).orElse(null);
+       return userRepository.findById(id).orElseThrow(() ->
+                new UserNotFoundException(
+                        "User with id " + id + " not found"));
        // Return a new empty User object if the user doesn't exist.
     }
 
@@ -65,7 +68,7 @@ public class UserService {
 
         System.out.println("10. User NOT FOUND");
 
-        return null;
+        throw new UserNotFoundException("User with id "+id +" not found");
     }
 
     public void deleteUser(Long id){
@@ -73,6 +76,6 @@ public class UserService {
         if (optionalUser.isPresent()) {
             userRepository.delete(optionalUser.get());
         }
-
+        throw new UserNotFoundException("User with id " + id + " not found");
     }
 }
