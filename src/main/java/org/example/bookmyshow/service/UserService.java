@@ -72,4 +72,13 @@ public class UserService {
         }
         throw new UserNotFoundException("User with id " + id + " not found");
     }
+
+    public User findByEmail(String email){
+        return userRepository.findByEmail(email);
+    }
+
+    public List<User> findByName(String name){
+        return userRepository.findByName(name);
+    }
+
 }

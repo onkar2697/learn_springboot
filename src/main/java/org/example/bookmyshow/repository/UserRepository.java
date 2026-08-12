@@ -3,7 +3,13 @@ package org.example.bookmyshow.repository;
 import org.example.bookmyshow.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 
+import java.util.List;
+
 public interface UserRepository extends JpaRepository<User,Long> {
-    public User FindByEmail(String email);
+
+    public User findByEmail(String email);
+
+    List<User> findByName(String name);
+
 
 }

@@ -1,5 +1,6 @@
 package org.example.bookmyshow.controller;
 
+import jakarta.websocket.server.PathParam;
 import org.example.bookmyshow.entity.User;
 import org.example.bookmyshow.service.UserService;
 import org.springframework.web.bind.annotation.*;
@@ -25,6 +26,14 @@ public class UserController {
         return service.getUserById(id);
     }
 
+    @GetMapping("/email/{email}")
+    public User findByEmail(@PathVariable String email) {
+        return service.findByEmail(email);
+    }
+
+    @GetMapping("/name/{name}")
+    public List<User> findByName(@PathVariable String name){ return service.findByName(name);}
+
     @PostMapping
     public User saveUser(@RequestBody User user){
         return service.saveUser(user);
@@ -39,4 +48,6 @@ public class UserController {
     public void deleteUser(@PathVariable Long id){
         service.deleteUser(id);
     }
+
+
 }
