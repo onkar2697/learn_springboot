@@ -33,15 +33,13 @@ public class UserService {
 
     public User getUserById(Long id){
 //        Optional<User> optionalUser = userRepository.findById(id);
-//
 //        if(optionalUser.isPresent()){
 //            return optionalUser.get();
 //        }
 //       return null;
        return userRepository.findById(id).orElseThrow(() ->
                 new UserNotFoundException(
-                        "User with id " + id + " not found"));
-       // Return a new empty User object if the user doesn't exist.
+                        "User with id " + id + " not found"));  // Return a new empty User object if the user doesn't exist.
     }
 
     public User updateUser(Long id, User user) {
@@ -49,19 +47,13 @@ public class UserService {
         Optional<User> optionalUser = userRepository.findById(id);
 
         if (optionalUser.isPresent()) {
-
             User existingUser = optionalUser.get();
-
             existingUser.setName(user.getName());
             existingUser.setEmail(user.getEmail());
-
             User savedUser = userRepository.save(existingUser);
-
             return savedUser;
         }
-
         System.out.println("10. User NOT FOUND");
-
         throw new UserNotFoundException("User with id "+id +" not found");
     }
 
@@ -73,12 +65,44 @@ public class UserService {
         throw new UserNotFoundException("User with id " + id + " not found");
     }
 
-    public User findByEmail(String email){
-        return userRepository.findByEmail(email);
+
+    public User findByEmail(String email) {
+        return userRepository.findByEmail(email)
+                .orElseThrow(() ->
+                        new UserNotFoundException("User with email " + email + " not found"));
     }
 
+
     public List<User> findByName(String name){
-        return userRepository.findByName(name);
+
+        List<User> users = userRepository.findByName(name);
+
+        if (users.isEmpty()) {
+            throw new UserNotFoundException(
+                    "User with name " + name + " not found");
+        }
+
+        return users;
+//        return userRepository.findByName(name)                    //this we don't use as its not more radble
+//                .filter(users -> !users.isEmpty())
+//                .orElseThrow(()                                   //for list<USers> we don't use elsethrow method
+//                        -> new UserNotFoundException("User with name " +name + " not found"));
+
     }
+
+//    //if we go for the optional then we have to write
+//    public List<User> findByName(String name) {
+//
+//        List<User> users = userRepository.findByName(name)
+//                .orElseThrow(() -> new UserNotFoundException(
+//                        "User with name " + name + " not found"));
+//
+//        if (users.isEmpty()) {
+//            throw new UserNotFoundException(
+//                    "User with name " + name + " not found");
+//        }
+//
+//        return users;
+//    }
 
 }
