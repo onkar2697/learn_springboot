@@ -32,7 +32,8 @@ public class UserController {
     }
 
     @GetMapping("/name/{name}")
-    public List<User> findByName(@PathVariable String name){ return service.findByName(name);}
+    public List<User> findByName(@RequestParam String name){ return service.findByName(name);}
+    // request param - when we want to filter/searching/sorting the data
 
     @PostMapping
     public User saveUser(@RequestBody User user){
