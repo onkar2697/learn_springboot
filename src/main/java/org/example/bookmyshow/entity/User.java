@@ -1,8 +1,7 @@
 package org.example.bookmyshow.entity;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
+
+import java.util.List;
 
 
 @Entity
@@ -14,6 +13,10 @@ public class User {
     private long  id;
     private String name;
     private String email;
+
+    @OneToMany(mappedBy = "user")
+    private List<Booking> bookings;
+
 
     public long getId() {
         return id;
