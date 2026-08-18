@@ -14,7 +14,7 @@ public class User {
     private String name;
     private String email;
 
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user", cascade = CascadeType.PERSIST)
     private List<Booking> bookings;
 
 
@@ -37,5 +37,12 @@ public class User {
     }
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public List<Booking> getBookings() {
+        return bookings;
+    }
+    public void setBookings(List<Booking> bookings) {
+        this.bookings = bookings;
     }
 }

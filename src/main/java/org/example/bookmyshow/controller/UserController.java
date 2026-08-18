@@ -50,5 +50,11 @@ public class UserController {
         service.deleteUser(id);
     }
 
+    //testing
+    @PostMapping("/test")
+    public User createUserWithBooking() {
+        return service.createUserWithBooking();
+    }
+
 
 }

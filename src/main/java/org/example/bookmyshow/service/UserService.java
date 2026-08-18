@@ -1,6 +1,7 @@
 package org.example.bookmyshow.service;
 
 
+import org.example.bookmyshow.entity.Booking;
 import org.example.bookmyshow.entity.User;
 import org.example.bookmyshow.exception.UserNotFoundException;
 import org.example.bookmyshow.repository.UserRepository;
@@ -105,4 +106,21 @@ public class UserService {
 //        return users;
 //    }
 
+
+    //test method for booking
+
+    public User createUserWithBooking(){
+        User user = new User();
+        user.setName("alex ray");
+        user.setEmail("alex@gmail.com");
+
+        Booking booking = new Booking();
+        booking.setMovieName("the rock");
+
+        //Link to both the sided
+        booking.setUser(user);
+        user.setBookings(List.of(booking));
+
+        return userRepository.save(user);
+    }
 }
