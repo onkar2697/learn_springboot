@@ -1,4 +1,6 @@
 package org.example.bookmyshow.entity;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 
 import java.util.List;
@@ -14,7 +16,12 @@ public class User {
     private String name;
     private String email;
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.PERSIST)
+    @OneToMany(
+            mappedBy = "user",
+            cascade = { CascadeType.PERSIST,
+                    CascadeType.MERGE }
+    )
+    @JsonManagedReference
     private List<Booking> bookings;
 
 

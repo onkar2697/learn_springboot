@@ -56,5 +56,10 @@ public class UserController {
         return service.createUserWithBooking();
     }
 
+    @PutMapping("/merge/{id}")
+    public User mergeExample(@PathVariable Long id) {
+        return service.updateUserAndBooking(id);
+    }
+
 
 }

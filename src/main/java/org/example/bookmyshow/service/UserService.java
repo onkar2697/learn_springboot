@@ -123,4 +123,18 @@ public class UserService {
 
         return userRepository.save(user);
     }
+
+    public User updateUserAndBooking(Long id){
+        User user = userRepository.findById(id)
+                .orElseThrow(()->
+                        new UserNotFoundException("User with id " + id + " not found"));
+
+        user.setName("Updated alex");
+
+        Booking booking = user.getBookings().get(0);
+        booking.setMovieName("Spider Man");
+
+
+        return userRepository.save(user);
+    }
 }
