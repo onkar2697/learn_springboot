@@ -19,7 +19,9 @@ public class User {
     @OneToMany(
             mappedBy = "user",
             cascade = { CascadeType.PERSIST,
-                    CascadeType.MERGE }
+                    CascadeType.MERGE,
+                    CascadeType.REMOVE
+            }
     )
     @JsonManagedReference
     private List<Booking> bookings;

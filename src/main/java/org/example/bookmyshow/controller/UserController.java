@@ -61,5 +61,12 @@ public class UserController {
         return service.updateUserAndBooking(id);
     }
 
+    @DeleteMapping("/delete/{id}")
+    public String delteUserAndBooking(@PathVariable Long id){
+        service.deleteUser(id);
+
+        return "user Deleted";
+    }
+
 
 }
