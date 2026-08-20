@@ -17,11 +17,11 @@ public class User {
     private String email;
 
     @OneToMany(
-            mappedBy = "user",
-            cascade = { CascadeType.PERSIST,
-                    CascadeType.MERGE,
-                    CascadeType.REMOVE
-            }
+            mappedBy = "user",cascade = CascadeType.ALL
+//            cascade = { CascadeType.PERSIST,
+//                    CascadeType.MERGE,
+//                    CascadeType.REMOVE }
+
     )
     @JsonManagedReference
     private List<Booking> bookings;
