@@ -12,7 +12,7 @@ public class Booking {
 
     private String movieName;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER) //default fetch type used by JPA
     @JoinColumn(name = "user_id")
     @JsonBackReference
     private User user;
