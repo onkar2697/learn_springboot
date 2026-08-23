@@ -20,7 +20,7 @@ public class BookinService {
     }
 
     public Booking createBooking(BookingRequestDTO bookingRequestDTO) {
-
+        return null;
     }
 
 }
