@@ -15,5 +15,8 @@ public interface UserRepository extends JpaRepository<User,Long> {
     @Query("SELECT u FROM User u WHERE name=?1")
     List<User> findByName(String name);
 
+    @Query("SELECT DISTINCT u FROM User u LEFT JOIN FETCH u.bookings")
+    List<User> findAllUserWithBookings();
+
 
 }
