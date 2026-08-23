@@ -9,7 +9,6 @@ public class Booking {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
     private String movieName;
 
     @ManyToOne(fetch = FetchType.LAZY) //overriding default fetch type used by JPA from EAGER to LAZY
