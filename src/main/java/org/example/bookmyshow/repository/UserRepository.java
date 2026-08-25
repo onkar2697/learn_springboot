@@ -1,6 +1,8 @@
 package org.example.bookmyshow.repository;
 
 import org.example.bookmyshow.entity.User;
+import org.hibernate.boot.model.source.spi.AttributePath;
+import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
@@ -15,8 +17,12 @@ public interface UserRepository extends JpaRepository<User,Long> {
     @Query("SELECT u FROM User u WHERE name=?1")
     List<User> findByName(String name);
 
-    @Query("SELECT DISTINCT u FROM User u LEFT JOIN FETCH u.bookings")   // using join Fetch to solve N+1 Query problem
-    List<User> findAllUsersWithBooking();
+    //@Query("SELECT DISTINCT u FROM User u LEFT JOIN FETCH u.bookings")
+    // List<User> findAllUsersWithBooking();         using join Fetch to solve N+1 Query problem
+
+    @EntityGraph(attributePaths = {"bookings"})
+    List<User> findAll();
+
 
 
 }

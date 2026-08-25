@@ -15,7 +15,8 @@ public class UserService {
 
     public List<User> getAllUsers(){
 
-        return userRepository.findAllUsersWithBooking();
+        //return userRepository.findAllUsersWithBooking(); //used this for join Fetch Query
+        return userRepository.findAll();
     }
 
     private final UserRepository userRepository;
