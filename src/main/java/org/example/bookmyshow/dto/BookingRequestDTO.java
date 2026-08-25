@@ -3,7 +3,7 @@ package org.example.bookmyshow.dto;
 public class BookingRequestDTO {
 
     private String movieName;
-    private String userId;
+    private Long userId;
 
     public String getMovieName() {
         return movieName;
@@ -13,11 +13,11 @@ public class BookingRequestDTO {
         this.movieName = movieName;
     }
 
-    public String getuserId() {
+    public Long getUserId() {
         return userId;
     }
 
-    public void setuserId(String user_id) {
-        this.userId = user_id;
+    public void setUserId(Long userId) {
+        this.userId = userId;
     }
 }
