@@ -15,7 +15,7 @@ public class UserService {
 
     public List<User> getAllUsers(){
 
-        return userRepository.findAll();
+        return userRepository.findAllUsersWithBooking();
     }
 
     private final UserRepository userRepository;
