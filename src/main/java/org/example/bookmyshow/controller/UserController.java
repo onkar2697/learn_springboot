@@ -51,10 +51,10 @@ public class UserController {
     }
 
     //testing
-    @PostMapping("/test")
-    public User createUserWithBooking() {
-        return service.createUserWithBooking();
-    }
+//    @PostMapping("/test")
+//    public User createUserWithBooking() {
+//        return service.createUserWithBooking();
+//    }
 
     @PutMapping("/merge/{id}")
     public User mergeExample(@PathVariable Long id) {
