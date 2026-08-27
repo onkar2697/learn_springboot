@@ -2,6 +2,7 @@ package org.example.bookmyshow.controller;
 
 import jakarta.websocket.server.PathParam;
 import org.example.bookmyshow.entity.User;
+import org.example.bookmyshow.projection.UserProjection;
 import org.example.bookmyshow.service.UserService;
 import org.springframework.web.bind.annotation.*;
 
@@ -25,6 +26,12 @@ public class UserController {
     public User getUSerById(@PathVariable Long id){
         return service.getUserById(id);
     }
+
+    @GetMapping("/projection")
+    public List<UserProjection> findUserProjection(){return service.findUserProjection();}
+
+    @GetMapping("projection/{id}")
+    public UserProjection findUserProjectionById(@PathVariable Long id){return service.}
 
     @GetMapping("/email/{email}")
     public User findByEmail(@PathVariable String email) {

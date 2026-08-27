@@ -1,7 +1,7 @@
 package org.example.bookmyshow.repository;
 
 import org.example.bookmyshow.entity.User;
-import org.hibernate.boot.model.source.spi.AttributePath;
+import org.example.bookmyshow.projection.UserProjection;
 import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -22,6 +22,11 @@ public interface UserRepository extends JpaRepository<User,Long> {
 
     @EntityGraph(attributePaths = {"bookings"})
     List<User> findAll();
+
+    @Query("SELECT u.id AS id, u.name AS name, u.email AS email FROM User u")
+    List<UserProjection> findUserProjection();
+
+    UserProjection findUserProjectionById(Long id);
 
 
 

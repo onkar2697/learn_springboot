@@ -4,6 +4,7 @@ package org.example.bookmyshow.service;
 import org.example.bookmyshow.entity.Booking;
 import org.example.bookmyshow.entity.User;
 import org.example.bookmyshow.exception.UserNotFoundException;
+import org.example.bookmyshow.projection.UserProjection;
 import org.example.bookmyshow.repository.UserRepository;
 import org.springframework.stereotype.Service;
 
@@ -144,4 +145,13 @@ public class UserService {
 
         userRepository.delete(user);
     }
+
+    public List<UserProjection>  findUserProjection(){
+        return userRepository.findUserProjection();
+    }
+
+    public UserProjection findUserProjectionById(Long id){
+        return userRepository.findUserProjectionById(id);
+    }
+
 }
