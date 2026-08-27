@@ -31,7 +31,7 @@ public class UserController {
     public List<UserProjection> findUserProjection(){return service.findUserProjection();}
 
     @GetMapping("projection/{id}")
-    public UserProjection findUserProjectionById(@PathVariable Long id){return service.}
+    public UserProjection findUserProjectionById(@PathVariable Long id){return service.findUserProjectionById(id);}
 
     @GetMapping("/email/{email}")
     public User findByEmail(@PathVariable String email) {
