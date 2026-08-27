@@ -1,6 +1,8 @@
 package org.example.bookmyshow.service;
 
 
+import org.example.bookmyshow.dto.UserDTO;
+import org.example.bookmyshow.dto.UserRecordDTO;
 import org.example.bookmyshow.entity.Booking;
 import org.example.bookmyshow.entity.User;
 import org.example.bookmyshow.exception.UserNotFoundException;
@@ -152,6 +154,14 @@ public class UserService {
 
     public UserProjection findUserProjectionById(Long id){
         return userRepository.findUserProjectionById(id);
+    }
+
+    public List<UserDTO> findUserDTO(){
+        return userRepository.findUserDTO();
+    }
+
+    public List<UserRecordDTO> findUserRecordDTO(){
+        return userRepository.findUserRecordDTO();
     }
 
 }

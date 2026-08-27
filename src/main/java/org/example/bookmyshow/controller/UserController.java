@@ -1,6 +1,8 @@
 package org.example.bookmyshow.controller;
 
 import jakarta.websocket.server.PathParam;
+import org.example.bookmyshow.dto.UserDTO;
+import org.example.bookmyshow.dto.UserRecordDTO;
 import org.example.bookmyshow.entity.User;
 import org.example.bookmyshow.projection.UserProjection;
 import org.example.bookmyshow.service.UserService;
@@ -32,6 +34,12 @@ public class UserController {
 
     @GetMapping("projection/{id}")
     public UserProjection findUserProjectionById(@PathVariable Long id){return service.findUserProjectionById(id);}
+
+    @GetMapping("projection/constructor")
+    public List<UserDTO> findUserDTO(){return service.findUserDTO();}
+
+    @GetMapping("/projection/record")
+    public List<UserRecordDTO> findUserRecordDTO(){ return service.findUserRecordDTO();}
 
     @GetMapping("/email/{email}")
     public User findByEmail(@PathVariable String email) {

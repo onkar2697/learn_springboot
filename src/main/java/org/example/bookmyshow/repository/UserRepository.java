@@ -1,5 +1,7 @@
 package org.example.bookmyshow.repository;
 
+import org.example.bookmyshow.dto.UserDTO;
+import org.example.bookmyshow.dto.UserRecordDTO;
 import org.example.bookmyshow.entity.User;
 import org.example.bookmyshow.projection.UserProjection;
 import org.springframework.data.jpa.repository.EntityGraph;
@@ -23,11 +25,14 @@ public interface UserRepository extends JpaRepository<User,Long> {
     @EntityGraph(attributePaths = {"bookings"})
     List<User> findAll();
 
-    @Query("SELECT u.id AS id, u.name AS name, u.email AS email FROM User u")
+    @Query("SELECT u.id AS id, u.name AS name, u.email AS email FROM User u")  // interface projection
     List<UserProjection> findUserProjection();
 
     UserProjection findUserProjectionById(Long id);
 
+    @Query("SELECT new org.example.bookmyshow.dto.UserDTO(u.id,u.name,u.email)FROM User u")   // Constructor Projection
+    List<UserDTO> findUserDTO();
 
-
+    @Query("SELECT new org.example.bookmyshow.dto.UserRecordDTO(u.id,u.name,u.email) FROM User u")
+    List<UserRecordDTO> findUserRecordDTO();
 }
