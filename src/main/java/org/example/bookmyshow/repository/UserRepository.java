@@ -33,6 +33,6 @@ public interface UserRepository extends JpaRepository<User,Long> {
     @Query("SELECT new org.example.bookmyshow.dto.UserDTO(u.id,u.name,u.email)FROM User u")   // Constructor Projection
     List<UserDTO> findUserDTO();
 
-    @Query("SELECT new org.example.bookmyshow.dto.UserRecordDTO(u.id,u.name,u.email) FROM User u")
+    @Query("SELECT new org.example.bookmyshow.dto.UserRecordDTO(u.id,u.name,u.email) FROM User u")  // Record Projection
     List<UserRecordDTO> findUserRecordDTO();
 }
