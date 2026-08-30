@@ -22,10 +22,10 @@ public interface UserRepository extends JpaRepository<User,Long> {
     List<User> findByName(String name);
 
     //@Query("SELECT DISTINCT u FROM User u LEFT JOIN FETCH u.bookings")
-    // List<User> findAllUsersWithBooking();         using join Fetch to solve N+1 Query problem
+    // List<User> findAllUsersWithBooking();       //  using join Fetch to solve N+1 Query problem (JPQL used)
 
-    @EntityGraph(attributePaths = {"bookings"})    // using entitygraph to overcome N+1 Query problem and
-    Page<User> findAll(Pageable pageable);   // Using PAgination here divide data in pages
+    @EntityGraph(attributePaths = {"bookings"})    // using entitygraph to overcome N+1 Query problem and need not write to jPQL query
+    Page<User> findAll(Pageable pageable);   // Using PAgination here divide data and also to use sorting
 
     @Query("SELECT u.id AS id, u.name AS name, u.email AS email FROM User u")  // interface projection
     List<UserProjection> findUserProjection();
