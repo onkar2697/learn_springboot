@@ -6,6 +6,8 @@ import org.example.bookmyshow.dto.UserRecordDTO;
 import org.example.bookmyshow.entity.User;
 import org.example.bookmyshow.projection.UserProjection;
 import org.example.bookmyshow.service.UserService;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -20,8 +22,8 @@ public class UserController {
     }
 
       @GetMapping
-      public List<User> getUsers() {
-          return service.getAllUsers();
+      public Page<User> getUsers(Pageable pageable) {
+          return service.getAllUsers(pageable);
       }
 
     @GetMapping("/{id}")

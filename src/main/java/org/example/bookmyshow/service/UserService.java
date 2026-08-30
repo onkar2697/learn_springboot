@@ -8,6 +8,8 @@ import org.example.bookmyshow.entity.User;
 import org.example.bookmyshow.exception.UserNotFoundException;
 import org.example.bookmyshow.projection.UserProjection;
 import org.example.bookmyshow.repository.UserRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -16,10 +18,10 @@ import java.util.Optional;
 @Service
 public class UserService {
 
-    public List<User> getAllUsers(){
+    public Page<User> getAllUsers(Pageable pageable){
 
         //return userRepository.findAllUsersWithBooking(); //used this for join Fetch Query
-        return userRepository.findAll();
+        return userRepository.findAll(pageable);
     }
 
     private final UserRepository userRepository;
@@ -163,6 +165,4 @@ public class UserService {
     public List<UserRecordDTO> findUserRecordDTO(){
         return userRepository.findUserRecordDTO();
     }
-
-
 }
