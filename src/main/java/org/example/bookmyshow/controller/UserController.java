@@ -21,15 +21,15 @@ public class UserController {
         this.service = service;
     }
 
-//      @GetMapping
-//      public Page<User> getUsers(Pageable pageable) {
-//          return service.getAllUsers(pageable);
-//      }
+      @GetMapping
+      public Page<User> getUsers(Pageable pageable) {
+          return service.getAllUsers(pageable);
+      }
 
-    @GetMapping
-    public Page<User> getUsers() {
-        return service.getAllUsers();
-    }
+//    @GetMapping
+//    public Page<User> getUsers() {
+//        return service.getAllUsers(); // normal getalluser method for sorting using sort.by()
+//    }
 
 
     @GetMapping("/{id}")

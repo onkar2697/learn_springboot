@@ -24,7 +24,8 @@ public interface UserRepository extends JpaRepository<User,Long> {
     //@Query("SELECT DISTINCT u FROM User u LEFT JOIN FETCH u.bookings")
     // List<User> findAllUsersWithBooking();       //  using join Fetch to solve N+1 Query problem (JPQL used)
 
-    @EntityGraph(attributePaths = {"bookings"})    // using entitygraph to overcome N+1 Query problem and need not write to jPQL query
+    @EntityGraph(attributePaths = {"bookings"})// using entitygraph to overcome N+1 Query problem and need not write to jPQL query
+    @Query("SELECT u FROM User u ORDER BY u.name ASC")    // sorting using JPQL query - only used in Repo no changes in controller and service
     Page<User> findAll(Pageable pageable);   // Using PAgination here divide data and also to use sorting
 
     @Query("SELECT u.id AS id, u.name AS name, u.email AS email FROM User u")  // interface projection

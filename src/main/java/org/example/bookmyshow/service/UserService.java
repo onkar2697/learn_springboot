@@ -20,18 +20,18 @@ import java.util.Optional;
 @Service
 public class UserService {
 
-//    public Page<User> getAllUsers(Pageable pageable){
-//
-//        //return userRepository.findAllUsersWithBooking(); //used this for join Fetch Query
-//        return userRepository.findAll(pageable);
-//    }
+    public Page<User> getAllUsers(Pageable pageable){
 
-    public Page<User> getAllUsers() {
-        Pageable pageable = PageRequest.of(0, 5,
-                Sort.by("name").ascending());
-
+        //return userRepository.findAllUsersWithBooking(); //used this for join Fetch Query
         return userRepository.findAll(pageable);
     }
+
+//    public Page<User> getAllUsers() {
+//        Pageable pageable = PageRequest.of(0, 5,
+//                Sort.by("name").ascending());  //sorting using  sort.by method
+//
+//        return userRepository.findAll(pageable);
+//    }
 
     private final UserRepository userRepository;
     public UserService(UserRepository userRepository) {
