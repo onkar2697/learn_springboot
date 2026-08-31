@@ -21,10 +21,16 @@ public class UserController {
         this.service = service;
     }
 
-      @GetMapping
-      public Page<User> getUsers(Pageable pageable) {
-          return service.getAllUsers(pageable);
-      }
+//      @GetMapping
+//      public Page<User> getUsers(Pageable pageable) {
+//          return service.getAllUsers(pageable);
+//      }
+
+    @GetMapping
+    public Page<User> getUsers() {
+        return service.getAllUsers();
+    }
+
 
     @GetMapping("/{id}")
     public User getUSerById(@PathVariable Long id){

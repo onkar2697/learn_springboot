@@ -9,7 +9,9 @@ import org.example.bookmyshow.exception.UserNotFoundException;
 import org.example.bookmyshow.projection.UserProjection;
 import org.example.bookmyshow.repository.UserRepository;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -18,9 +20,16 @@ import java.util.Optional;
 @Service
 public class UserService {
 
-    public Page<User> getAllUsers(Pageable pageable){
+//    public Page<User> getAllUsers(Pageable pageable){
+//
+//        //return userRepository.findAllUsersWithBooking(); //used this for join Fetch Query
+//        return userRepository.findAll(pageable);
+//    }
 
-        //return userRepository.findAllUsersWithBooking(); //used this for join Fetch Query
+    public Page<User> getAllUsers() {
+        Pageable pageable = PageRequest.of(0, 5,
+                Sort.by("name").ascending());
+
         return userRepository.findAll(pageable);
     }
 
