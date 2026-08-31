@@ -1,5 +1,6 @@
 package org.example.bookmyshow.controller;
 
+import jakarta.validation.Valid;
 import jakarta.websocket.server.PathParam;
 import org.example.bookmyshow.dto.UserDTO;
 import org.example.bookmyshow.dto.UserRecordDTO;
@@ -59,12 +60,12 @@ public class UserController {
     // request param - when we want to filter/searching/sorting the data
 
     @PostMapping
-    public User saveUser(@RequestBody User user){
+    public User saveUser(@Valid @RequestBody User user){
         return service.saveUser(user);
-    }
+    }  //Validating user to store the values
 
     @PutMapping("/{id}")
-    public User updateUser(@PathVariable Long id, @RequestBody User user){
+    public User updateUser(@PathVariable Long id,@Valid @RequestBody User user){
         return service.updateUser(id,user);
     }
 

@@ -2,6 +2,7 @@ package org.example.bookmyshow.entity;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.*;
 
 import java.util.List;
 
@@ -10,12 +11,17 @@ import java.util.List;
 public class User {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    //Let mysql/database generate the ids it generates id sequestially
+    @GeneratedValue(strategy = GenerationType.IDENTITY)   //Let mysql/database generate the ids it generates id sequestially
     private long  Id;
+    @NotBlank(message = "Name must not be blank")  // Using Validations
     private String name;
+    @NotBlank(message = "Email must not be blank")
+    @Email(message = "Enter a valid email")
     private String email;
+    @Min(value = 18, message= "age must be greater than 18")
     private long age;
+    @NotBlank
+    @Size(min = 6,max =15, message = "Password should be greater than 6 and less than 15 characters")
     private String password;
 
     @OneToMany(
