@@ -179,8 +179,10 @@ public class UserService {
 
     public Page<User> findUsersBySpecification(String name, Pageable pageable) {
 
-        Specification<User> specification =
-                UserSpecifications.hasName(name);
+        Specification<User> specification = null;
+        if(name != null) {
+           specification = UserSpecifications.hasName(name);
+        }
 
         return userRepository.findAll(specification,pageable);
     }
