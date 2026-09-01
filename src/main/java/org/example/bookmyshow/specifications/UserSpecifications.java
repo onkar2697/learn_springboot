@@ -8,4 +8,14 @@ public class UserSpecifications {
         return ((root, query, criteriaBuilder) ->
                 criteriaBuilder.equal(root.get("name"),name));
     }
+
+    public static Specification<User> hasAgeGreaterThanOrEqualTo(int age){
+        return ((root,query,criteriaBuilder) ->
+                criteriaBuilder.greaterThanOrEqualTo(root.get("age"),age));
+    }
+
+    public static Specification<User> hasEmail(String email){
+        return ((root,query,criteriaBuilder) ->
+                criteriaBuilder.equal(root.get("email"),email));
+    }
 }

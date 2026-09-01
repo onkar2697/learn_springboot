@@ -93,8 +93,12 @@ public class UserController {
     }
 
     @GetMapping("/specifications")
-    public Page<User> findUsersBySpecification(@RequestParam(required = false) String name,Pageable pageable){
-        return service.findUsersBySpecification(name,pageable);
+    public Page<User> findUsersBySpecification(
+            @RequestParam(required = false) String name,
+            @RequestParam(required= false) Integer age,
+            @RequestParam(required = false) String email,
+            Pageable pageable){
+        return service.findUsersBySpecification(name,age,email,pageable);
     }
 
 

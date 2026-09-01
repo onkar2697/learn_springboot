@@ -177,13 +177,30 @@ public class UserService {
         return userRepository.findUserRecordDTO();
     }
 
-    public Page<User> findUsersBySpecification(String name, Pageable pageable) {
+    public Page<User> findUsersBySpecification(String name,Integer age,String email, Pageable pageable) {
 
         Specification<User> specification = null;
         if(name != null) {
            specification = UserSpecifications.hasName(name);
         }
+        if(age != null){
+            if(specification != null){
+                specification=  specification.and(UserSpecifications.hasAgeGreaterThanOrEqualTo(age));
+            }
+            else {
+                specification = UserSpecifications.hasAgeGreaterThanOrEqualTo(age);
+            }
+        }
+        if(email != null){
+            if(specification != null){
+                specification = specification.and(UserSpecifications.hasEmail(email));
+            }
+            else{
+                specification = UserSpecifications.hasEmail(email);
+            }
+        }
 
         return userRepository.findAll(specification,pageable);
     }
+
 }
