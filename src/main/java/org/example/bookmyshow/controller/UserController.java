@@ -33,7 +33,7 @@ public class UserController {
 //    }
 
 
-    @GetMapping("/{id}")
+    @GetMapping("/{id:\\d+}")   //only digits will be routed
     public User getUSerById(@PathVariable Long id){
         return service.getUserById(id);
     }
@@ -93,7 +93,9 @@ public class UserController {
     }
 
     @GetMapping("/specifications")
-    public List<User> findUsersBySpecification(){return service.findUsersBySpecification();}
+    public Page<User> findUsersBySpecification(@RequestParam String name,Pageable pageable){
+        return service.findUsersBySpecification(name,pageable);
+    }
 
 
 }

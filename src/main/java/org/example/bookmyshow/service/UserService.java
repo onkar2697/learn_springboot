@@ -177,11 +177,11 @@ public class UserService {
         return userRepository.findUserRecordDTO();
     }
 
-    public List<User> findUsersBySpecification() {
+    public Page<User> findUsersBySpecification(String name, Pageable pageable) {
 
         Specification<User> specification =
-                UserSpecifications.hasName("aley gem");
+                UserSpecifications.hasName(name);
 
-        return userRepository.findAll(specification);
+        return userRepository.findAll(specification,pageable);
     }
 }
