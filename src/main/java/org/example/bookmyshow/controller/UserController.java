@@ -92,5 +92,8 @@ public class UserController {
         return "user Deleted";
     }
 
+    @GetMapping("/specifications")
+    public List<User> findUsersBySpecification(){return service.findUsersBySpecification();}
+
 
 }

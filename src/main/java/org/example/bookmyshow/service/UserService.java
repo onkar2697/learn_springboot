@@ -8,10 +8,12 @@ import org.example.bookmyshow.entity.User;
 import org.example.bookmyshow.exception.UserNotFoundException;
 import org.example.bookmyshow.projection.UserProjection;
 import org.example.bookmyshow.repository.UserRepository;
+import org.example.bookmyshow.specifications.UserSpecifications;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -173,5 +175,13 @@ public class UserService {
 
     public List<UserRecordDTO> findUserRecordDTO(){
         return userRepository.findUserRecordDTO();
+    }
+
+    public List<User> findUsersBySpecification() {
+
+        Specification<User> specification =
+                UserSpecifications.hasName("aley gem");
+
+        return userRepository.findAll(specification);
     }
 }
