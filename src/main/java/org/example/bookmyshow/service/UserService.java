@@ -182,7 +182,8 @@ public class UserService {
 
         Specification<User> specification = null;
         if(name != null) {
-           specification = UserSpecifications.hasName(name);
+           //specification = UserSpecifications.hasName(name);
+            specification = UserSpecifications.hasUserContainingName(name);
         }
         if(age != null){
             if(specification != null){
@@ -212,7 +213,8 @@ public class UserService {
         Specification<User> specification = null;
 
         if(name != null){
-            specification = UserSpecifications.hasName(name);
+//            specification = UserSpecifications.hasName(name);               // using .equal
+            specification = UserSpecifications.hasUserContainingName(name);   // using .like
         }
         if(age != null){
             if(specification != null){

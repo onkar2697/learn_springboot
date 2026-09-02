@@ -18,4 +18,10 @@ public class UserSpecifications {
         return ((root,query,criteriaBuilder) ->
                 criteriaBuilder.equal(root.get("email"),email));
     }
+
+    public static Specification<User> hasUserContainingName(String name){
+        return ((root,query,criteriaBuilder)->
+                criteriaBuilder.like(
+                        criteriaBuilder.lower(root.get("name")),"%"+name.toLowerCase()+"%"));
+    }
 }
