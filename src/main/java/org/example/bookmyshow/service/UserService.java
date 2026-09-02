@@ -22,6 +22,8 @@ import java.util.Optional;
 @Service
 public class UserService {
 
+    private final UserRepository userRepository;
+
     public Page<User> getAllUsers(Pageable pageable){
 
         //return userRepository.findAllUsersWithBooking(); //used this for join Fetch Query
@@ -35,14 +37,12 @@ public class UserService {
 //        return userRepository.findAll(pageable);
 //    }
 
-    private final UserRepository userRepository;
-    public UserService(UserRepository userRepository) {
 
+    public UserService(UserRepository userRepository) {
         this.userRepository = userRepository;
     }
 
     public User saveUser(User user){
-
         return userRepository.save(user);
     }
 
@@ -65,10 +65,11 @@ public class UserService {
             User existingUser = optionalUser.get();
             existingUser.setName(user.getName());
             existingUser.setEmail(user.getEmail());
+            existingUser.setAge(user.getAge());
+            existingUser.setPassword(user.getPassword());
             User savedUser = userRepository.save(existingUser);
             return savedUser;
         }
-        System.out.println("10. User NOT FOUND");
         throw new UserNotFoundException("User with id "+id +" not found");
     }
 
