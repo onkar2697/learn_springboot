@@ -101,5 +101,14 @@ public class UserController {
         return service.findUsersBySpecification(name,age,email,pageable);
     }
 
+    @GetMapping("/specifications/or")
+    public Page<User> findUserBySpecificationOr(
+            @RequestParam(required = false) String name,
+            @RequestParam(required = false) String email,
+            @RequestParam(required = false) Integer age,
+            Pageable pageable){
+        return service.findUserBySpecificationOr(name,age,email,pageable);
+    }
+
 
 }

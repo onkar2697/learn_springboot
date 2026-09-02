@@ -203,4 +203,35 @@ public class UserService {
         return userRepository.findAll(specification,pageable);
     }
 
+
+
+
+    public Page<User> findUserBySpecificationOr(String name,Integer age, String email, Pageable pageable){
+
+        Specification<User> specification = null;
+
+        if(name != null){
+            specification = UserSpecifications.hasName(name);
+        }
+        if(age != null){
+            if(specification != null){
+
+                specification = specification.or(UserSpecifications.hasAgeGreaterThanOrEqualTo(age));
+            }
+            else{
+                specification = UserSpecifications.hasAgeGreaterThanOrEqualTo(age);
+            }
+        }
+
+        if(email != null){
+            if(specification != null){
+                specification = specification.or(UserSpecifications.hasEmail(email));
+            }
+            else{
+                specification = UserSpecifications.hasEmail(email);
+            }
+        }
+        return userRepository.findAll(specification, pageable);
+    }
+
 }
