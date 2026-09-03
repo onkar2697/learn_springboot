@@ -209,7 +209,8 @@ public class UserService {
 
 
 
-    public Page<User> findUserBySpecificationOr(String name,Integer age, String email, Pageable pageable){
+//    public Page<User> findUserBySpecificationOr(String name,Integer age, String email, Pageable pageable)
+     public Page<User> findUserBySpecificationOr(String name,Integer minAge,Integer maxAge, String email, Pageable pageable){
 
         Specification<User> specification = null;
 
@@ -218,13 +219,17 @@ public class UserService {
 //            specification = UserSpecifications.hasUserContainingName(name);   // using .like
             specification =UserSpecifications.hasaUserStartWith(name);         //cheching start with name
         }
-        if(age != null){
-            if(specification != null){
-
-                specification = specification.or(UserSpecifications.hasAgeGreaterThanOrEqualTo(age));   // we are using or condition
+         System.out.println("minAge = " + minAge);
+         System.out.println("maxAge = " + maxAge);
+//        if(age != null){
+         if(minAge != null && maxAge != null){
+             if(specification != null){
+                 //             specification = specification.or(UserSpecifications.hasAgeGreaterThanOrEqualTo(age));   // we are using or condition
+                specification = specification.or(UserSpecifications.hasUserAgeInBetween(minAge,maxAge));
             }
             else{
-                specification = UserSpecifications.hasAgeGreaterThanOrEqualTo(age);
+//                specification = UserSpecifications.hasAgeGreaterThanOrEqualTo(age);
+                 specification = UserSpecifications.hasUserAgeInBetween(minAge,maxAge);
             }
         }
 

@@ -9,7 +9,7 @@ public class UserSpecifications {
                 criteriaBuilder.equal(root.get("name"),name));
     }
 
-    public static Specification<User> hasAgeGreaterThanOrEqualTo(int age){
+    public static Specification<User> hasAgeGreaterThanOrEqualTo(Integer age){
         return ((root,query,criteriaBuilder) ->
                 criteriaBuilder.greaterThanOrEqualTo(root.get("age"),age));
     }
@@ -22,7 +22,7 @@ public class UserSpecifications {
     public static Specification<User> hasUserContainingName(String name){
         return ((root,query,criteriaBuilder)->
                 criteriaBuilder.like(
-                        criteriaBuilder.lower(root.get("name")),"%"+name.toLowerCase()+"%"));    //conatins word/name expression
+                        criteriaBuilder.lower(root.get("name")),"%"+name.toLowerCase()+"%"));   //conatins word/name expression
     }
 
     public static Specification<User> hasaUserStartWith(String name){
@@ -34,5 +34,10 @@ public class UserSpecifications {
     public static Specification<User> hasUserEndsWith(String name){
         return ((root,query,criteriaBuilder)->
                 criteriaBuilder.like(criteriaBuilder.lower(root.get("name")),"%"+name));           //End with Expression
+    }
+
+    public static Specification<User> hasUserAgeInBetween(Integer minAge, Integer maxAge){
+        return ((root,query,criteriaBuilder)->
+                criteriaBuilder.between(root.get("age"),minAge,maxAge));
     }
 }

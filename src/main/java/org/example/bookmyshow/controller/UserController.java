@@ -106,8 +106,10 @@ public class UserController {
             @RequestParam(required = false) String name,
             @RequestParam(required = false) String email,
             @RequestParam(required = false) Integer age,
+            @RequestParam(required = false) Integer minAge,
+            @RequestParam(required=false) Integer maxAge,
             Pageable pageable){
-        return service.findUserBySpecificationOr(name,age,email,pageable);
+        return service.findUserBySpecificationOr(name, minAge, maxAge ,email,pageable);
     }
 
 
