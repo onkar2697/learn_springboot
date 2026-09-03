@@ -183,11 +183,12 @@ public class UserService {
         Specification<User> specification = null;
         if(name != null) {
            //specification = UserSpecifications.hasName(name);
-            specification = UserSpecifications.hasUserContainingName(name);
+//            specification = UserSpecifications.hasUserContainingName(name);
+            specification = UserSpecifications.hasUserEndsWith(name);
         }
         if(age != null){
             if(specification != null){
-                specification=  specification.and(UserSpecifications.hasAgeGreaterThanOrEqualTo(age));
+                specification=  specification.and(UserSpecifications.hasAgeGreaterThanOrEqualTo(age));    // here we are using and condition
             }
             else {
                 specification = UserSpecifications.hasAgeGreaterThanOrEqualTo(age);
@@ -214,12 +215,13 @@ public class UserService {
 
         if(name != null){
 //            specification = UserSpecifications.hasName(name);               // using .equal
-            specification = UserSpecifications.hasUserContainingName(name);   // using .like
+//            specification = UserSpecifications.hasUserContainingName(name);   // using .like
+            specification =UserSpecifications.hasaUserStartWith(name);         //cheching start with name
         }
         if(age != null){
             if(specification != null){
 
-                specification = specification.or(UserSpecifications.hasAgeGreaterThanOrEqualTo(age));
+                specification = specification.or(UserSpecifications.hasAgeGreaterThanOrEqualTo(age));   // we are using or condition
             }
             else{
                 specification = UserSpecifications.hasAgeGreaterThanOrEqualTo(age);

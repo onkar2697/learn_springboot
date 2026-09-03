@@ -22,6 +22,17 @@ public class UserSpecifications {
     public static Specification<User> hasUserContainingName(String name){
         return ((root,query,criteriaBuilder)->
                 criteriaBuilder.like(
-                        criteriaBuilder.lower(root.get("name")),"%"+name.toLowerCase()+"%"));
+                        criteriaBuilder.lower(root.get("name")),"%"+name.toLowerCase()+"%"));    //conatins word/name expression
+    }
+
+    public static Specification<User> hasaUserStartWith(String name){
+        return ((root,query,criteriaBuilder)->
+                criteriaBuilder.like(
+                        criteriaBuilder.lower(root.get("name")),name.toLowerCase()+"%"));            //start with expression
+    }
+
+    public static Specification<User> hasUserEndsWith(String name){
+        return ((root,query,criteriaBuilder)->
+                criteriaBuilder.like(criteriaBuilder.lower(root.get("name")),"%"+name));           //End with Expression
     }
 }
