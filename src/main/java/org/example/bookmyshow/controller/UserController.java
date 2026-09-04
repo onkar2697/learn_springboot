@@ -112,5 +112,11 @@ public class UserController {
         return service.findUserBySpecificationOr(name, minAge, maxAge ,email,pageable);
     }
 
+    @GetMapping("/qbe")
+    public Page<User> findUserByExample(
+            @RequestParam(required = false) String name,
+            Pageable pageable){
+        return service.findUsersByExamples(name,pageable);
+    }
 
 }

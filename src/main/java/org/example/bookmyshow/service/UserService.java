@@ -9,10 +9,7 @@ import org.example.bookmyshow.exception.UserNotFoundException;
 import org.example.bookmyshow.projection.UserProjection;
 import org.example.bookmyshow.repository.UserRepository;
 import org.example.bookmyshow.specifications.UserSpecifications;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.*;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
@@ -242,6 +239,17 @@ public class UserService {
             }
         }
         return userRepository.findAll(specification, pageable);
+    }
+
+    public Page<User> findUsersByExamples(String name, Pageable pageable) {
+
+        User probe = new User();
+        probe.setName(name);
+
+        Example<User> example = Example.of(probe);
+
+        return userRepository.findAll(example,pageable);
+
     }
 
 }
