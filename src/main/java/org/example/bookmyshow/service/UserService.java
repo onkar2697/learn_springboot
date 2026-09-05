@@ -246,7 +246,10 @@ public class UserService {
         User probe = new User();
         probe.setName(name);
 
-        Example<User> example = Example.of(probe);
+        ExampleMatcher matcher = ExampleMatcher.matching();
+
+
+        Example<User> example = Example.of(probe, matcher);
 
         return userRepository.findAll(example,pageable);
 

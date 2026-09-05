@@ -12,14 +12,14 @@ public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)   //Let mysql/database generate the ids it generates id sequestially
-    private long  Id;
+    private Long  Id;                              //Using wrapper classes instead of primitive data type so default value should be null (!=0)
     @NotBlank(message = "Name must not be blank")  // Using Validations
     private String name;
     @NotBlank(message = "Email must not be blank")
     @Email(message = "Enter a valid email")
     private String email;
     @Min(value = 18, message= "age must be greater than 18")
-    private long age;
+    private Long age;
     @NotBlank
     @Size(min = 6,max =15, message = "Password should be greater than 6 and less than 15 characters")
     private String password;
@@ -35,10 +35,10 @@ public class User {
     private List<Booking> bookings;
 
 
-    public long getId() {
+    public Long getId() {
         return Id;
     }
-    public void setId(long id) {
+    public void setId(Long id) {
         this.Id = id;
     }
 
@@ -71,11 +71,11 @@ public class User {
         this.password = password;
     }
 
-    public long getAge() {
+    public Long getAge() {
         return age;
     }
 
-    public void setAge(long age) {
+    public void setAge(Long age) {
         this.age = age;
     }
 }
