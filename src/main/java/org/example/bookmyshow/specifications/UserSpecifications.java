@@ -1,5 +1,7 @@
 package org.example.bookmyshow.specifications;
 
+import jakarta.persistence.criteria.Join;
+import org.example.bookmyshow.entity.Booking;
 import org.example.bookmyshow.entity.User;
 import org.springframework.data.jpa.domain.Specification;
 
@@ -39,5 +41,14 @@ public class UserSpecifications {
     public static Specification<User> hasUserAgeInBetween(Integer minAge, Integer maxAge){
         return ((root,query,criteriaBuilder)->
                 criteriaBuilder.between(root.get("age"),minAge,maxAge));
+    }
+
+    public static Specification<User> hasUserHaveBookins(String movieName){
+        return((root,query,criteriaBuilder)->{
+
+            Join<User, Booking> bookingjoin = root.join("bookings");
+
+                return criteriaBuilder.equal(bookingjoin.get("movieName"),movieName);
+        });
     }
 }

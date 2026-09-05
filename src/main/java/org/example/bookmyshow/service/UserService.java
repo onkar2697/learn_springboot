@@ -207,7 +207,7 @@ public class UserService {
 
 
 //    public Page<User> findUserBySpecificationOr(String name,Integer age, String email, Pageable pageable)
-     public Page<User> findUserBySpecificationOr(String name,Integer minAge,Integer maxAge, String email, Pageable pageable){
+     public Page<User> findUserBySpecificationOr(String name,String movieName, Integer minAge,Integer maxAge, String email, Pageable pageable){
 
         Specification<User> specification = null;
 
@@ -238,6 +238,17 @@ public class UserService {
                 specification = UserSpecifications.hasEmail(email);
             }
         }
+
+        if(movieName != null){
+            Specification<User> moviespec = UserSpecifications.hasUserHaveBookins(movieName);
+            if(specification != null){
+                specification = specification.or(moviespec);
+            }
+            else{
+                specification = moviespec;
+            }
+        }
+
         return userRepository.findAll(specification, pageable);
     }
 
@@ -246,8 +257,10 @@ public class UserService {
         User probe = new User();
         probe.setName(name);
 
-        ExampleMatcher matcher = ExampleMatcher.matching();
+//        ExampleMatcher matcher = ExampleMatcher.matching()
+//                .withIgnoreCase().withStringMatcher(ExampleMatcher.StringMatcher.CONTAINING);  //using matcher containing method to check
 
+        ExampleMatcher matcher = ExampleMatcher.matching().withMatcher("name",ExampleMatcher.GenericPropertyMatchers.contains().ignoreCase());  //when we have more than 2 feilds and checking with both with different approch as contains and exact
 
         Example<User> example = Example.of(probe, matcher);
 

@@ -105,11 +105,12 @@ public class UserController {
     public Page<User> findUserBySpecificationOr(
             @RequestParam(required = false) String name,
             @RequestParam(required = false) String email,
+            @RequestParam(required = false) String movieName,
             @RequestParam(required = false) Integer age,
             @RequestParam(required = false) Integer minAge,
             @RequestParam(required=false) Integer maxAge,
             Pageable pageable){
-        return service.findUserBySpecificationOr(name, minAge, maxAge ,email,pageable);
+        return service.findUserBySpecificationOr(name,movieName, minAge, maxAge ,email,pageable);
     }
 
     @GetMapping("/qbe")
