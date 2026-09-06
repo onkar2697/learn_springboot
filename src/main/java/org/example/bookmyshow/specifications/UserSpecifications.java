@@ -46,7 +46,7 @@ public class UserSpecifications {
     public static Specification<User> hasUserHaveBookins(String movieName){
         return((root,query,criteriaBuilder)->{
 
-            Join<User, Booking> bookingjoin = root.join("bookings");
+            Join<User, Booking> bookingjoin = root.join("bookings");   // using reference to get the booking
 
                 return criteriaBuilder.equal(bookingjoin.get("movieName"),movieName);
         });

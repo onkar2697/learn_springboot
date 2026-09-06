@@ -260,7 +260,11 @@ public class UserService {
 //        ExampleMatcher matcher = ExampleMatcher.matching()
 //                .withIgnoreCase().withStringMatcher(ExampleMatcher.StringMatcher.CONTAINING);  //using matcher containing method to check
 
-        ExampleMatcher matcher = ExampleMatcher.matching().withMatcher("name",ExampleMatcher.GenericPropertyMatchers.contains().ignoreCase());  //when we have more than 2 feilds and checking with both with different approch as contains and exact
+        ExampleMatcher matcher = ExampleMatcher.matching().withMatcher(
+                "name", ExampleMatcher
+                        .GenericPropertyMatchers
+                        .contains()
+                        .ignoreCase());  //when we have more than 2 feilds and checking with both with different approch as contains and exact
 
         Example<User> example = Example.of(probe, matcher);
 
