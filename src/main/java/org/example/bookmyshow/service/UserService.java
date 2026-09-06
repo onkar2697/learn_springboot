@@ -240,7 +240,7 @@ public class UserService {
         }
 
         if(movieName != null){
-            Specification<User> moviespec = UserSpecifications.hasUserHaveBookins(movieName);
+            Specification<User> moviespec = UserSpecifications.hasUserHaveBookins(movieName);  // adding it in moviespec then with specification
             if(specification != null){
                 specification = specification.or(moviespec);
             }
