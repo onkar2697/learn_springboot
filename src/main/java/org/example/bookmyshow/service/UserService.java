@@ -254,8 +254,8 @@ public class UserService {
 
     public Page<User> findUsersByExamples(String name, Pageable pageable) {
 
-        User probe = new User();
-        probe.setName(name);
+        User probe = new User();   // In Example matcher we are creating a object and searching details using that object
+        probe.setName(name);       // limited or support like we cant get details age>18 like we get in specifications
 
 //        ExampleMatcher matcher = ExampleMatcher.matching()
 //                .withIgnoreCase().withStringMatcher(ExampleMatcher.StringMatcher.CONTAINING);  //using matcher containing method to check
