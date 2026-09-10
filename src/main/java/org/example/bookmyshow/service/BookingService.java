@@ -1,6 +1,7 @@
 package org.example.bookmyshow.service;
 
 
+import jakarta.transaction.Transactional;
 import org.example.bookmyshow.dto.BookingRequestDTO;
 import org.example.bookmyshow.entity.Booking;
 import org.example.bookmyshow.entity.User;
