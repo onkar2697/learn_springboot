@@ -1,14 +1,17 @@
 package org.example.bookmyshow.service;
 
 
+import jakarta.transaction.Transactional;
 import org.example.bookmyshow.dto.UserDTO;
 import org.example.bookmyshow.dto.UserRecordDTO;
 import org.example.bookmyshow.entity.Booking;
 import org.example.bookmyshow.entity.User;
 import org.example.bookmyshow.exception.UserNotFoundException;
 import org.example.bookmyshow.projection.UserProjection;
+import org.example.bookmyshow.repository.BookingRepository;
 import org.example.bookmyshow.repository.UserRepository;
 import org.example.bookmyshow.specifications.UserSpecifications;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.*;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
@@ -18,6 +21,9 @@ import java.util.Optional;
 
 @Service
 public class UserService {
+
+    @Autowired
+    private BookingRepository bookingRepository;
 
     private final UserRepository userRepository;
 
@@ -273,5 +279,19 @@ public class UserService {
         return userRepository.findAll(example,pageable);
 
     }
+    @Transactional
+    public void createUserAndBooking(User user, Booking booking) {
+
+        // Save user
+        User savedUser = userRepository.save(user);
+
+        // Associate booking with user
+        booking.setUser(savedUser);
+        bookingRepository.save(booking);
+
+        // Simulate failure
+        int x = 10 / 0;
+    }
+
 
 }
