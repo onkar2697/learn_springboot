@@ -279,7 +279,7 @@ public class UserService {
         return userRepository.findAll(example,pageable);
 
     }
-    @Transactional
+    @Transactional                                                //using this annotation to complete all process in one step if any of process fails rollback the changes
     public void createUserAndBooking(User user, Booking booking) {
 
         // Save user
