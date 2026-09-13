@@ -4,6 +4,7 @@ import jakarta.validation.Valid;
 import jakarta.websocket.server.PathParam;
 import org.example.bookmyshow.dto.UserDTO;
 import org.example.bookmyshow.dto.UserRecordDTO;
+import org.example.bookmyshow.entity.Booking;
 import org.example.bookmyshow.entity.User;
 import org.example.bookmyshow.projection.UserProjection;
 import org.example.bookmyshow.service.UserService;
@@ -118,6 +119,15 @@ public class UserController {
             @RequestParam(required = false) String name,
             Pageable pageable){
         return service.findUsersByExamples(name,pageable);
+    }
+
+    @PostMapping("/transactional/test")
+    public void transactionTest(@RequestBody User user,
+    @RequestParam String movieName){
+        Booking booking = new Booking();
+        booking.setMovieName(movieName);
+
+        service.createUserAndBooking(user,booking);
     }
 
 }

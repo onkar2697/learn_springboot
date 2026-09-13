@@ -290,7 +290,7 @@ public class UserService {
         bookingRepository.save(booking);
 
         // Simulate failure
-        int x = 10 / 0;
+       // int x = 10 / 0;
     }
 
 
