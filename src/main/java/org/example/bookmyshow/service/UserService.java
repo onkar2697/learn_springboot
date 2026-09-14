@@ -1,7 +1,7 @@
 package org.example.bookmyshow.service;
 
 
-import jakarta.transaction.Transactional;
+import org.springframework.transaction.annotation.Transactional;
 import org.example.bookmyshow.dto.UserDTO;
 import org.example.bookmyshow.dto.UserRecordDTO;
 import org.example.bookmyshow.entity.Booking;
@@ -27,6 +27,7 @@ public class UserService {
 
     private final UserRepository userRepository;
 
+    @Transactional(readOnly = true)       // it just reads the data no modification is done
     public Page<User> getAllUsers(Pageable pageable){
 
         //return userRepository.findAllUsersWithBooking(); //used this for join Fetch Query
@@ -280,6 +281,9 @@ public class UserService {
 
     }
     @Transactional                                                //using this annotation to complete all process in one step if any of process fails rollback the changes
+    //@Transactional(rollbackFor = Exception.class)
+    //exception.class isn't something you normally use just because there are many exceptions.
+    // Use it when the business/transaction boundary genuinely requires rollback for checked exceptions broadly.
     public void createUserAndBooking(User user, Booking booking) {
 
         // Save user
