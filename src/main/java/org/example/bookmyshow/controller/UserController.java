@@ -130,4 +130,15 @@ public class UserController {
         service.createUserAndBooking(user,booking);
     }
 
+    @PostMapping("/transactional/checked-exception")
+    public void testCheckedException(
+            @RequestBody User user,
+            @RequestParam String movieName) {
+
+        Booking booking = new Booking();
+        booking.setMovieName(movieName);
+
+        service.testCheckedExceptionRollback(user, booking);
+    }
+
 }
