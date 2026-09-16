@@ -296,6 +296,16 @@ public class UserService {
         // Simulate failure
        // int x = 10 / 0;
     }
+    @Transactional(rollbackFor = Exception.class)
+    public void testCheckedExceptionRollback(User user, Booking booking) throws Exception {
+
+        User savedUser = userRepository.save(user);
+
+        booking.setUser(savedUser);
+        bookingRepository.save(booking);
+
+        throw new Exception("Testing checked exception rollback");
+    }
 
 
 }
