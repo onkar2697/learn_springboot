@@ -2,6 +2,7 @@ package org.example.bookmyshow.service;
 
 
 import org.springframework.transaction.annotation.Isolation;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import org.example.bookmyshow.dto.UserDTO;
 import org.example.bookmyshow.dto.UserRecordDTO;
@@ -303,6 +304,7 @@ public class UserService {
        // int x = 10 / 0;
     }
     @Transactional(rollbackFor = Exception.class)
+    // propagation = Propagation.REQUIRED is default propagation & propagation = Propagation.REQUIRES_NEW creates new transaction
     public void testCheckedExceptionRollback(User user, Booking booking) throws Exception {
 
         User savedUser = userRepository.save(user);
