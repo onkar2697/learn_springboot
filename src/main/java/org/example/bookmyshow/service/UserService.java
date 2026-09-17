@@ -1,6 +1,7 @@
 package org.example.bookmyshow.service;
 
 
+import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
 import org.example.bookmyshow.dto.UserDTO;
 import org.example.bookmyshow.dto.UserRecordDTO;
@@ -280,7 +281,12 @@ public class UserService {
         return userRepository.findAll(example,pageable);
 
     }
-    @Transactional                                                //using this annotation to complete all process in one step if any of process fails rollback the changes
+    @Transactional(isolation = Isolation.SERIALIZABLE)
+    //SERIALIZABLE means concurrent transactions are handled with the strongest isolation,
+    // so the database prevents phenomena such as dirty reads, non-repeatable reads, and phantom reads.
+    // Depending on the database and the queries involved, this can result in blocking/waiting, locking, or serialization failures.
+
+    // Transactional - using this annotation to complete all process in one step if any of process fails rollback the changes
     //@Transactional(rollbackFor = Exception.class)
     //exception.class isn't something you normally use just because there are many exceptions.
     // Use it when the business/transaction boundary genuinely requires rollback for checked exceptions broadly.

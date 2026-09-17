@@ -133,7 +133,7 @@ public class UserController {
     @PostMapping("/transactional/checked-exception")
     public void testCheckedException(
             @RequestBody User user,
-            @RequestParam String movieName) {
+            @RequestParam String movieName) throws Exception {
 
         Booking booking = new Booking();
         booking.setMovieName(movieName);

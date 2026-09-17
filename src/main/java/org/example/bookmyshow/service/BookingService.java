@@ -21,6 +21,7 @@ public class BookingService {
         this.bookingRepository = bookingRepository;
     }
 
+    @Transactional
     public Booking createBooking(BookingRequestDTO bookingRequestDTO) {
         User user = userRepository.findById(bookingRequestDTO.getUserId())
                 .orElseThrow(
