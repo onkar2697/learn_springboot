@@ -3,7 +3,9 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
+import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedBy;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
@@ -31,8 +33,12 @@ public class User {
 
     @CreatedDate
     private LocalDateTime createdDate;
+    @CreatedBy
+    private String createdBy;
     @LastModifiedDate
     private LocalDateTime lastModifiedDate;
+    @LastModifiedBy
+    private String lastModifiedBy;
 
     @OneToMany(
             mappedBy = "user",cascade = CascadeType.ALL
