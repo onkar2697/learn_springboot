@@ -40,6 +40,9 @@ public class User {
     @LastModifiedBy
     private String lastModifiedBy;
 
+    @Version
+    private Long version;
+
     @OneToMany(
             mappedBy = "user",cascade = CascadeType.ALL
 //            cascade = { CascadeType.PERSIST,
