@@ -316,7 +316,7 @@ public class UserService {
     }
 
     @Transactional
-    public void optimisticClockTest(Long id, Long newAge){
+    public void optimisticClockTest(Long id, Long newAge){    // using this test method to test how locking wil work
         User user = userRepository.findById(id)
                 .orElseThrow(()-> new UserNotFoundException("user not found"));
         System.out.println("Loded user with version "+ user.getVersion());

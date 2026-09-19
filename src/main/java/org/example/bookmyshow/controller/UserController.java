@@ -141,4 +141,9 @@ public class UserController {
         service.testCheckedExceptionRollback(user, booking);
     }
 
+    @PutMapping("/optimistic-lock/{id}")
+    public void testOptimisticLock(@PathVariable Long id,@RequestParam Long age){
+        service.optimisticClockTest(id,age);
+    }
+
 }
