@@ -315,5 +315,22 @@ public class UserService {
         throw new Exception("Testing checked exception rollback");
     }
 
+    @Transactional
+    public void optimisticClockTest(Long id, Long newAge){
+        User user = userRepository.findById(id)
+                .orElseThrow(()-> new UserNotFoundException("user not found"));
+        System.out.println("Loded user with version "+ user.getVersion());
+
+        user.setAge(newAge);
+
+        try{
+            Thread.sleep(1000);
+        }catch(InterruptedException e){
+            Thread.currentThread().interrupt();
+        }
+
+        userRepository.save(user);
+    }
+
 
 }

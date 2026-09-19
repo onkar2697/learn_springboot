@@ -97,4 +97,12 @@ public class User {
     public void setAge(Long age) {
         this.age = age;
     }
+
+    public Long getVersion() {
+        return version;
+    }
+
+    public void setVersion(Long version) {
+        this.version = version;
+    }
 }
