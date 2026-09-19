@@ -323,13 +323,19 @@ public class UserService {
 
         user.setAge(newAge);
 
-        try{
-            Thread.sleep(1000);
-        }catch(InterruptedException e){
+        try {
+            Thread.sleep(15000);
+        } catch (InterruptedException e) {
             Thread.currentThread().interrupt();
         }
 
+        user.setAge(newAge);
+
         userRepository.save(user);
+
+        System.out.println(
+                "Updated user with version " + user.getVersion()
+        );
     }
 
 
