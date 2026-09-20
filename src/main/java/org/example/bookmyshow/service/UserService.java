@@ -343,7 +343,7 @@ public class UserService {
 
     @Transactional
     public void passimesticLockTest(Long id, Long age){
-        User user = userRepository.findById(id)
+        User user = userRepository.findUserForUpdate(id)
                 .orElseThrow(()-> new UserNotFoundException("User not found"));
         System.out.println("User loaded, waiting for 10 sec");
         user.setAge(age);

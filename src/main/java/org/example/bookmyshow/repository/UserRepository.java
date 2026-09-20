@@ -8,6 +8,7 @@ import org.example.bookmyshow.projection.UserProjection;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.*;
+import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 import java.util.Optional;
@@ -39,7 +40,8 @@ public interface UserRepository extends JpaRepository<User,Long>, JpaSpecificati
     List<UserRecordDTO> findUserRecordDTO();
 
     @Lock(LockModeType.PESSIMISTIC_WRITE)
-    Optional<User> findById(Long id);
+    @Query("SELECT u FROM User u WHERE u.id = :id")
+    Optional<User> findUserForUpdate(@Param("id") Long id);
 
     Optional<User> findByIdAndDeletedFalse(Long id);
 

@@ -148,7 +148,7 @@ public class UserController {
 
     @PutMapping("/passimisting-lock/{id}")
     public void testPassimistingLock(@PathVariable Long id,@RequestParam Long age){
-        service.optimisticClockTest(id,age);
+        service.passimesticLockTest(id,age);
     }
 
     @DeleteMapping("soft-delete/{id}")
