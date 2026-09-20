@@ -146,4 +146,14 @@ public class UserController {
         service.optimisticClockTest(id,age);
     }
 
+    @PutMapping("/passimisting-lock/{id}")
+    public void testPassimistingLock(@PathVariable Long id,@RequestParam Long age){
+        service.optimisticClockTest(id,age);
+    }
+
+    @DeleteMapping("soft-delete/{id}")
+    public void testSoftDelete(@PathVariable Long id){
+        service.softDeleteTest(id);
+    }
+
 }

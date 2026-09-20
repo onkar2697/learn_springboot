@@ -42,6 +42,8 @@ public class User {
 
     @Version
     private Long version;
+    @Column(nullable = false)
+    private boolean deleted = false;
 
     @OneToMany(
             mappedBy = "user",cascade = CascadeType.ALL
@@ -104,5 +106,13 @@ public class User {
 
     public void setVersion(Long version) {
         this.version = version;
+    }
+
+    public boolean isDeleted() {
+        return deleted;
+    }
+
+    public void setDeleted(boolean deleted) {
+        this.deleted = deleted;
     }
 }

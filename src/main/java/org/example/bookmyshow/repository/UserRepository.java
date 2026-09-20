@@ -1,15 +1,13 @@
 package org.example.bookmyshow.repository;
 
+import jakarta.persistence.LockModeType;
 import org.example.bookmyshow.dto.UserDTO;
 import org.example.bookmyshow.dto.UserRecordDTO;
 import org.example.bookmyshow.entity.User;
 import org.example.bookmyshow.projection.UserProjection;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.jpa.repository.EntityGraph;
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
-import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.jpa.repository.*;
 
 import java.util.List;
 import java.util.Optional;
@@ -39,4 +37,13 @@ public interface UserRepository extends JpaRepository<User,Long>, JpaSpecificati
 
     @Query("SELECT new org.example.bookmyshow.dto.UserRecordDTO(u.id,u.name,u.email) FROM User u")  // Record Projection
     List<UserRecordDTO> findUserRecordDTO();
+
+    @Lock(LockModeType.PESSIMISTIC_WRITE)
+    Optional<User> findById(Long id);
+
+    Optional<User> findByIdAndDeletedFalse(Long id);
+
+    Page<User> findByDeletedFalse(Pageable pageable);
+
+
 }

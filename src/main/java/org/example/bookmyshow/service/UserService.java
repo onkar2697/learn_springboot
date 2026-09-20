@@ -33,7 +33,8 @@ public class UserService {
     public Page<User> getAllUsers(Pageable pageable){
 
         //return userRepository.findAllUsersWithBooking(); //used this for join Fetch Query
-        return userRepository.findAll(pageable);
+       // return userRepository.findAll(pageable);
+        return userRepository.findByDeletedFalse(pageable);
     }
 
 //    public Page<User> getAllUsers() {
@@ -58,7 +59,9 @@ public class UserService {
 //            return optionalUser.get();
 //        }
 //       return null;
-       return userRepository.findById(id).orElseThrow(() ->
+//       return userRepository.findById(id).orElseThrow(() ->
+
+        return userRepository.findByIdAndDeletedFalse(id).orElseThrow(()->
                 new UserNotFoundException(
                         "User with id " + id + " not found"));  // Return a new empty User object if the user doesn't exist.
     }
@@ -336,6 +339,31 @@ public class UserService {
         System.out.println(
                 "Updated user with version " + user.getVersion()
         );
+    }
+
+    @Transactional
+    public void passimesticLockTest(Long id, Long age){
+        User user = userRepository.findById(id)
+                .orElseThrow(()-> new UserNotFoundException("User not found"));
+        System.out.println("User loaded, waiting for 10 sec");
+        user.setAge(age);
+
+        try{
+            Thread.sleep(1000);
+        }catch(InterruptedException e){
+            Thread.currentThread().interrupt();
+        }
+        userRepository.save(user);
+    }
+
+    @Transactional
+    public void softDeleteTest(Long id){
+        User user = userRepository.findById(id)        // soft deleting so recdord will be there in databse but as hidden or not enabled
+                .orElseThrow(()-> new UserNotFoundException("User not found"));
+
+        user.setDeleted(true);
+
+        userRepository.save(user);
     }
 
 
