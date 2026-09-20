@@ -68,7 +68,7 @@ public class UserService {
 
     public User updateUser(Long id, User user) {
 
-        Optional<User> optionalUser = userRepository.findById(id);
+        Optional<User> optionalUser = userRepository.findByIdAndDeletedFalse(id);
 
         if (optionalUser.isPresent()) {
             User existingUser = optionalUser.get();
@@ -332,10 +332,7 @@ public class UserService {
             Thread.currentThread().interrupt();
         }
 
-        user.setAge(newAge);
-
         userRepository.save(user);
-
         System.out.println(
                 "Updated user with version " + user.getVersion()
         );
@@ -358,7 +355,7 @@ public class UserService {
 
     @Transactional
     public void softDeleteTest(Long id){
-        User user = userRepository.findById(id)        // soft deleting so recdord will be there in databse but as hidden or not enabled
+        User user = userRepository.findByIdAndDeletedFalse(id)        // soft deleting so recdord will be there in databse but as hidden or not enabled
                 .orElseThrow(()-> new UserNotFoundException("User not found"));
 
         user.setDeleted(true);
