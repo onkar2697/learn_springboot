@@ -1,6 +1,7 @@
 package org.example.bookmyshow.service;
 
 
+import org.example.bookmyshow.dto.UserRequestDTO;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -49,9 +50,19 @@ public class UserService {
         this.userRepository = userRepository;
     }
 
-    public User saveUser(User user){
+//    public User saveUser(User user){
+//        return userRepository.save(user);
+//    }
+    public User saveUser(UserRequestDTO userRequestDTO){
+        User user = new User();
+        user.setName(userRequestDTO.getName());
+        user.setEmail(userRequestDTO.getEmail());
+        user.setPassword(userRequestDTO.getPassword());
+        user.setAge(userRequestDTO.getAge());
+
         return userRepository.save(user);
     }
+
 
     public User getUserById(Long id){
 //        Optional<User> optionalUser = userRepository.findById(id);
@@ -319,7 +330,7 @@ public class UserService {
     }
 
     @Transactional
-    public void optimisticClockTest(Long id, Long newAge){    // using this test method to test how locking wil work
+    public void optimisticClockTest(Long id, Integer newAge){    // using this test method to test how locking wil work
         User user = userRepository.findById(id)
                 .orElseThrow(()-> new UserNotFoundException("user not found"));
         System.out.println("Loded user with version "+ user.getVersion());
@@ -339,7 +350,7 @@ public class UserService {
     }
 
     @Transactional
-    public void passimesticLockTest(Long id, Long age){
+    public void passimesticLockTest(Long id, Integer age){
         User user = userRepository.findUserForUpdate(id)
                 .orElseThrow(()-> new UserNotFoundException("User not found"));
         System.out.println("User loaded, waiting for 10 sec");

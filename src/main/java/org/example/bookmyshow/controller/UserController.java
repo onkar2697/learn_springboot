@@ -4,6 +4,7 @@ import jakarta.validation.Valid;
 import jakarta.websocket.server.PathParam;
 import org.example.bookmyshow.dto.UserDTO;
 import org.example.bookmyshow.dto.UserRecordDTO;
+import org.example.bookmyshow.dto.UserRequestDTO;
 import org.example.bookmyshow.entity.Booking;
 import org.example.bookmyshow.entity.User;
 import org.example.bookmyshow.projection.UserProjection;
@@ -61,8 +62,9 @@ public class UserController {
     // request param - when we want to filter/searching/sorting the data
 
     @PostMapping
-    public User saveUser(@Valid @RequestBody User user){
-        return service.saveUser(user);
+    //public User saveUser(@Valid @RequestBody User user)
+    public User saveUser(@Valid @RequestBody UserRequestDTO userRequestDTO){
+        return service.saveUser(userRequestDTO);
     }  //Validating user to store the values
 
     @PutMapping("/{id}")
@@ -142,12 +144,12 @@ public class UserController {
     }
 
     @PutMapping("/optimistic-lock/{id}")
-    public void testOptimisticLock(@PathVariable Long id,@RequestParam Long age){
+    public void testOptimisticLock(@PathVariable Long id,@RequestParam Integer age){
         service.optimisticClockTest(id,age);
     }
 
     @PutMapping("/passimisting-lock/{id}")
-    public void testPassimistingLock(@PathVariable Long id,@RequestParam Long age){
+    public void testPassimistingLock(@PathVariable Long id,@RequestParam Integer age){
         service.passimesticLockTest(id,age);
     }
 
