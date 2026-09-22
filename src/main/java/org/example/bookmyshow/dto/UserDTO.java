@@ -1,6 +1,6 @@
 package org.example.bookmyshow.dto;
 
-public class UserDTO {
+public class UserDTO {           // this DTO we have used for DTO projection purpose
     Long id;
     String name;
     String email;

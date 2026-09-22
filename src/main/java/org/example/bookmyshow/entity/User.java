@@ -26,7 +26,7 @@ public class User {
     @Email(message = "Enter a valid email")
     private String email;
     @Min(value = 18, message= "age must be greater than 18")
-    private Long age;
+    private Integer age;
     @NotBlank
     @Size(min = 6,max =15, message = "Password should be greater than 6 and less than 15 characters")
     private String password;
@@ -92,11 +92,11 @@ public class User {
         this.password = password;
     }
 
-    public Long getAge() {
+    public Integer getAge() {
         return age;
     }
 
-    public void setAge(Long age) {
+    public void setAge(Integer age) {
         this.age = age;
     }
 
