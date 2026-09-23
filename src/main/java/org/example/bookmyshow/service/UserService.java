@@ -2,6 +2,7 @@ package org.example.bookmyshow.service;
 
 
 import org.example.bookmyshow.dto.UserRequestDTO;
+import org.example.bookmyshow.dto.UserResponseDTO;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -53,14 +54,22 @@ public class UserService {
 //    public User saveUser(User user){
 //        return userRepository.save(user);
 //    }
-    public User saveUser(UserRequestDTO userRequestDTO){
+    public UserResponseDTO saveUser(UserRequestDTO userRequestDTO){
         User user = new User();
         user.setName(userRequestDTO.getName());
         user.setEmail(userRequestDTO.getEmail());
         user.setPassword(userRequestDTO.getPassword());
         user.setAge(userRequestDTO.getAge());
 
-        return userRepository.save(user);
+        User savedUser= userRepository.save(user);
+
+        UserResponseDTO userResponseDTO = new UserResponseDTO();
+        userResponseDTO.setId(savedUser.getId());
+        userResponseDTO.setName(savedUser.getName());
+        userResponseDTO.setEmail(savedUser.getEmail());
+        userResponseDTO.setAge(savedUser.getAge());
+
+        return userResponseDTO;
     }
 
 

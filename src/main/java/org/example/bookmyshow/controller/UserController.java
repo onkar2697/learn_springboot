@@ -5,6 +5,7 @@ import jakarta.websocket.server.PathParam;
 import org.example.bookmyshow.dto.UserDTO;
 import org.example.bookmyshow.dto.UserRecordDTO;
 import org.example.bookmyshow.dto.UserRequestDTO;
+import org.example.bookmyshow.dto.UserResponseDTO;
 import org.example.bookmyshow.entity.Booking;
 import org.example.bookmyshow.entity.User;
 import org.example.bookmyshow.projection.UserProjection;
@@ -63,7 +64,7 @@ public class UserController {
 
     @PostMapping
     //public User saveUser(@Valid @RequestBody User user)
-    public User saveUser(@Valid @RequestBody UserRequestDTO userRequestDTO){
+    public UserResponseDTO saveUser(@Valid @RequestBody UserRequestDTO userRequestDTO){
         return service.saveUser(userRequestDTO);
     }  //Validating user to store the values
 
