@@ -3,6 +3,7 @@ package org.example.bookmyshow.service;
 
 import org.example.bookmyshow.dto.UserRequestDTO;
 import org.example.bookmyshow.dto.UserResponseDTO;
+import org.example.bookmyshow.mapper.UserMapper;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -28,8 +29,14 @@ public class UserService {
 
     @Autowired
     private BookingRepository bookingRepository;
-
     private final UserRepository userRepository;
+    private final UserMapper userMapper;
+
+    public UserService(UserRepository userRepository, UserMapper userMapper) {             //Constructor injection
+
+        this.userRepository = userRepository;
+        this.userMapper = userMapper;
+    }
 
     @Transactional(readOnly = true)       // it just reads the data no modification is done
     public Page<User> getAllUsers(Pageable pageable){
@@ -47,29 +54,31 @@ public class UserService {
 //    }
 
 
-    public UserService(UserRepository userRepository) {
-        this.userRepository = userRepository;
-    }
+
 
 //    public User saveUser(User user){
 //        return userRepository.save(user);
 //    }
     public UserResponseDTO saveUser(UserRequestDTO userRequestDTO){
-        User user = new User();
-        user.setName(userRequestDTO.getName());
-        user.setEmail(userRequestDTO.getEmail());
-        user.setPassword(userRequestDTO.getPassword());
-        user.setAge(userRequestDTO.getAge());
+
+//        User user = new User();
+//        user.setName(userRequestDTO.getName());
+//        user.setEmail(userRequestDTO.getEmail());
+//        user.setPassword(userRequestDTO.getPassword());
+//        user.setAge(userRequestDTO.getAge());
+
+        User user = userMapper.toEntity(userRequestDTO);         //using mapper and redusing code complexity in service calss
 
         User savedUser= userRepository.save(user);
 
-        UserResponseDTO userResponseDTO = new UserResponseDTO();
-        userResponseDTO.setId(savedUser.getId());
-        userResponseDTO.setName(savedUser.getName());
-        userResponseDTO.setEmail(savedUser.getEmail());
-        userResponseDTO.setAge(savedUser.getAge());
+//        UserResponseDTO userResponseDTO = new UserResponseDTO();
+//        userResponseDTO.setId(savedUser.getId());
+//        userResponseDTO.setName(savedUser.getName());
+//        userResponseDTO.setEmail(savedUser.getEmail());
+//        userResponseDTO.setAge(savedUser.getAge());
+//        UserResponseDTO userResponseDTO = userMapper.toUserResponseDTO(savedUser);
 
-        return userResponseDTO;
+        return userMapper.toUserResponseDTO(savedUser);
     }
 
 
