@@ -9,6 +9,7 @@ import org.example.bookmyshow.dto.UserResponseDTO;
 import org.example.bookmyshow.entity.Booking;
 import org.example.bookmyshow.entity.User;
 import org.example.bookmyshow.projection.UserProjection;
+import org.example.bookmyshow.response.ApiResponse;
 import org.example.bookmyshow.service.UserService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -64,8 +65,15 @@ public class UserController {
 
     @PostMapping
     //public User saveUser(@Valid @RequestBody User user)
-    public UserResponseDTO saveUser(@Valid @RequestBody UserRequestDTO userRequestDTO){
-        return service.saveUser(userRequestDTO);
+ //   public UserResponseDTO saveUser(@Valid @RequestBody UserRequestDTO userRequestDTO){
+    public ApiResponse<UserResponseDTO> saveUser(@Valid @RequestBody UserRequestDTO userRequestDTO){
+        UserResponseDTO response =  service.saveUser(userRequestDTO);
+
+        return new ApiResponse<>(
+                true,
+                "User created successfully",
+                response
+        );
     }  //Validating user to store the values
 
     @PutMapping("/{id}")
