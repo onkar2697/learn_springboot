@@ -20,10 +20,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.*;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
+import lombok.extern.slf4j.Slf4j;
 
 import java.util.List;
 import java.util.Optional;
 
+@Slf4j
 @Service
 public class UserService {
 
@@ -257,8 +259,10 @@ public class UserService {
 //            specification = UserSpecifications.hasUserContainingName(name);   // using .like
             specification =UserSpecifications.hasaUserStartWith(name);         //cheching start with name
         }
-         System.out.println("minAge = " + minAge);
-         System.out.println("maxAge = " + maxAge);
+         //System.out.println("minAge = " + minAge);
+         //System.out.println("maxAge = " + maxAge);
+         log.debug("minAge = {}",minAge);
+         log.debug("maxAge = {}",maxAge);  // using logger no need to print statement
 //        if(age != null){
          if(minAge != null && maxAge != null){
              if(specification != null){
@@ -325,12 +329,13 @@ public class UserService {
     // Use it when the business/transaction boundary genuinely requires rollback for checked exceptions broadly.
     public void createUserAndBooking(User user, Booking booking) {
 
-        // Save user
         User savedUser = userRepository.save(user);
+        log.info("User with id created {}",savedUser.getId());
 
-        // Associate booking with user
+
         booking.setUser(savedUser);
         bookingRepository.save(booking);
+        log.info("booking crerated for user {}",savedUser.getId());
 
         // Simulate failure
        // int x = 10 / 0;
