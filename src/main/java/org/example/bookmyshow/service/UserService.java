@@ -262,7 +262,10 @@ public class UserService {
          //System.out.println("minAge = " + minAge);
          //System.out.println("maxAge = " + maxAge);
          log.debug("minAge = {}",minAge);
-         log.debug("maxAge = {}",maxAge);  // using logger no need to print statement
+         log.debug("maxAge = {}",maxAge);
+         log.info("using logger as Logger provides different log levels such as DEBUG, INFO," +
+                 " WARN and ERROR, along with configurable output, filtering and useful application context.");
+
 //        if(age != null){
          if(minAge != null && maxAge != null){
              if(specification != null){
