@@ -2,6 +2,7 @@ package org.example.bookmyshow.controller;
 
 import jakarta.validation.Valid;
 import jakarta.websocket.server.PathParam;
+import org.example.bookmyshow.constants.AppConstants;
 import org.example.bookmyshow.dto.UserDTO;
 import org.example.bookmyshow.dto.UserRecordDTO;
 import org.example.bookmyshow.dto.UserRequestDTO;
@@ -71,7 +72,8 @@ public class UserController {
 
         return new ApiResponse<>(
                 true,
-                "User created successfully",
+                AppConstants.USER_CREATED,
+  //               "User created successfully",
                 response
         );
     }  //Validating user to store the values
