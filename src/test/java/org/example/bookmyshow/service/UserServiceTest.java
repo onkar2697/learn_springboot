@@ -135,4 +135,12 @@ public class UserServiceTest {
    //      verify(userRepository).delete(existingUser);      //we should not verify as its delted insted write it as
         assertTrue(existingUser.isDeleted());
     }
+
+    @Test
+    void softDeleteUserNotFound(){
+        when(userRepository.findByIdAndDeletedFalse(999L)).thenReturn(Optional.empty());
+
+        assertThrows(UserNotFoundException.class,
+                ()-> userService.softDeleteTest(999L));
+    }
 }
