@@ -2,6 +2,7 @@ package org.example.bookmyshow.controller;
 
 import org.example.bookmyshow.config.JpaAuditingConfig;
 import org.example.bookmyshow.entity.User;
+import org.example.bookmyshow.exception.UserNotFoundException;
 import org.example.bookmyshow.service.UserService;
 import org.junit.jupiter.api.Test;
 
@@ -17,9 +18,8 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
 
+import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -97,4 +97,62 @@ public class UserControllerTest {
 
         verify(userService).updateUser(eq(1L), any(User.class));
     }
+
+    @Test
+    void updateUserNotFound() throws Exception{
+
+        when(userService.updateUser(eq(999L),any(User.class)))
+                .thenThrow(UserNotFoundException.class);
+        mockMvc.perform(
+                        put("/users/999")
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .content("""
+                                        {
+                                            "name": "updated",
+                                            "email": "updated@123",
+                                            "age": 28,
+                                            "password": "updated@123"
+                                        }
+                                        """)
+                )
+                .andExpect(status().isNotFound());  // here we are getting 404 not found error not 200 ok response
+    }
+
+    @Test
+    void validationFailureTest() throws Exception {
+
+        mockMvc.perform(
+                put("/users/1")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("""
+                                 {
+                                 "name": " ",
+                                 "email": "updated@123",
+                                 "age": 28,
+                                 "password": "updated@123"
+                                 }
+                                """)
+        )
+                .andExpect(status().isBadRequest());
+        verify(userService,never()).updateUser(anyLong(),any(User.class));
+    }
+
+    @Test
+    void createUserTest() throws Exception{
+
+        mockMvc.perform(post("/users")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content("""
+                        {
+                        "name": "abcd",
+                        "email": "abcd@123",
+                        "age": 28,
+                        "password": "abcd@123"
+                        }
+                        """)
+        )
+                .andExpect(status().isOk());
+
+    }
+
 }
