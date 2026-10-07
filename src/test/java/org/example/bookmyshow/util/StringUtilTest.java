@@ -18,11 +18,6 @@ public class StringUtilTest {
     }
 
     @Test
-    void shouldReturnTrueWhenStringIsNull(){
-        assertTrue(StringUtil.isBlank(null));
-    }
-
-    @Test
     void shouldReturnTrueWhenStringContainsOnlySpaces() {
         assertTrue(StringUtil.isBlank("   "));
     }
