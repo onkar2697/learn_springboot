@@ -2,22 +2,25 @@ package org.example.bookmyshow.controller;
 
 import org.example.bookmyshow.config.JpaAuditingConfig;
 import org.example.bookmyshow.entity.User;
-import org.example.bookmyshow.repository.UserRepository;
 import org.example.bookmyshow.service.UserService;
 import org.junit.jupiter.api.Test;
+
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
-import org.springframework.boot.autoconfigure.data.jpa.JpaRepositoriesAutoConfiguration;
+
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.FilterType;
+import org.springframework.http.MediaType;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
 
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -40,7 +43,7 @@ public class UserControllerTest {
     MockMvc mockMvc;
 
     @Test
-    void getUserById() throws Exception{
+    void getUserById() throws Exception {
         User user = new User();
         user.setName("kim");
         user.setPassword("kim@123");
@@ -53,4 +56,45 @@ public class UserControllerTest {
                 .andExpect(jsonPath("$.name").value("kim"));
     }
 
+    @Test
+    void deleteUserById() throws Exception {
+//        mockMvc.perform(delete("/users/delete/1"))
+        mockMvc.perform(delete("/users/1"))
+                .andExpect(status().isOk());
+        verify(userService).deleteUser(1L);
+    }
+
+    @Test
+    void updateUser() throws Exception {
+
+        User updatedUser = new User();
+        updatedUser.setId(1L);
+        updatedUser.setName("updated");
+        updatedUser.setPassword("updated@123");
+        updatedUser.setAge(28);
+        updatedUser.setEmail("updated@123");
+
+        when(userService.updateUser(eq(1L), any(User.class)))
+                .thenReturn(updatedUser);
+
+        mockMvc.perform(
+                        put("/users/1")
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .content("""
+                                        {
+                                            "name": "updated",
+                                            "email": "updated@123",
+                                            "age": 28,
+                                            "password": "updated@123"
+                                        }
+                                        """)
+                )
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.name").value("updated"))
+                .andExpect(jsonPath("$.email").value("updated@123"))
+                .andExpect(jsonPath("$.age").value(28))
+                .andExpect(jsonPath("$.password").value("updated@123"));
+
+        verify(userService).updateUser(eq(1L), any(User.class));
+    }
 }
