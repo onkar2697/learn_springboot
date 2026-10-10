@@ -4,6 +4,7 @@ package org.example.bookmyshow.integrationTest;
 import org.example.bookmyshow.dto.UserRequestDTO;
 import org.example.bookmyshow.dto.UserResponseDTO;
 import org.example.bookmyshow.entity.User;
+import org.example.bookmyshow.exception.UserNotFoundException;
 import org.example.bookmyshow.repository.UserRepository;
 import org.example.bookmyshow.service.UserService;
 import org.junit.jupiter.api.Test;
@@ -11,8 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 @Transactional
@@ -69,6 +69,15 @@ public class UserIntegrationTest {
         assertEquals("Roman", retrievedUser.getName());
         assertEquals("roman.integration@gmail.com", retrievedUser.getEmail());
         assertEquals(26, retrievedUser.getAge());
+    }
+
+    @Test
+    void shouldThrowExceptionWhenUserNotFound() {
+
+        assertThrows(
+                UserNotFoundException.class,
+                () -> userService.getUserById(999999L)
+        );
     }
 
 }
