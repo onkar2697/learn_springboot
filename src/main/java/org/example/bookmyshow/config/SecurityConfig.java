@@ -2,7 +2,11 @@ package org.example.bookmyshow.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
+import org.springframework.security.authentication.AuthenticationProvider;
+import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.Customizer;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -12,6 +16,7 @@ import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
+@EnableMethodSecurity
 public class SecurityConfig {
 
     @Bean
@@ -21,24 +26,40 @@ public class SecurityConfig {
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/users/public").permitAll()
-                        .requestMatchers("users/admin").hasRole("ADMIN")
+                        .requestMatchers("/users/admin").hasRole("ADMIN")
                         .requestMatchers("/users/user").hasRole("USER")
+                        .requestMatchers(HttpMethod.POST, "/users").permitAll()
                         .anyRequest().authenticated()
                 )
                 .httpBasic(Customizer.withDefaults());
 
         return http.build();
     }
+
+
     @Bean
-    public UserDetailsService userDetailsService(
+    public AuthenticationProvider authenticationProvider(
+            UserDetailsService userDetailsService,
             PasswordEncoder passwordEncoder) {
 
-        UserDetails user = User.builder()
-                .username("user")
-                .password(passwordEncoder.encode("BookMyShow@123"))
-                .roles("USER")
-                .build();
+        DaoAuthenticationProvider provider =
+                new DaoAuthenticationProvider(userDetailsService);
 
-        return new InMemoryUserDetailsManager(user);
+        provider.setPasswordEncoder(passwordEncoder);
+
+        return provider;
     }
+//    @Bean
+//    //loads user information
+//    public UserDetailsService userDetailsService(
+//            PasswordEncoder passwordEncoder) {
+//
+//        UserDetails user = User.builder()
+//                .username("user")
+//                .password(passwordEncoder.encode("BookMyShow@123"))  //password encoder encodes the password
+//                .roles("USER")
+//                .build();
+//
+//        return new InMemoryUserDetailsManager(user);
+//    }
 }

@@ -4,6 +4,7 @@ package org.example.bookmyshow.service;
 import org.example.bookmyshow.dto.UserRequestDTO;
 import org.example.bookmyshow.dto.UserResponseDTO;
 import org.example.bookmyshow.mapper.UserMapper;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -33,11 +34,13 @@ public class UserService {
     private BookingRepository bookingRepository;
     private final UserRepository userRepository;
     private final UserMapper userMapper;
+    private final PasswordEncoder passwordEncoder;
 
-    public UserService(UserRepository userRepository, UserMapper userMapper) {             //Constructor injection
+    public UserService(UserRepository userRepository, UserMapper userMapper,PasswordEncoder passwordEncoder) {             //Constructor injection
 
         this.userRepository = userRepository;
         this.userMapper = userMapper;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @Transactional(readOnly = true)       // it just reads the data no modification is done
@@ -69,7 +72,10 @@ public class UserService {
 //        user.setPassword(userRequestDTO.getPassword());
 //        user.setAge(userRequestDTO.getAge());
 
-        User user = userMapper.toEntity(userRequestDTO);         //using mapper and redusing code complexity in service calss
+        User user = userMapper.toEntity(userRequestDTO);//using mapper and redusing code complexity in service calss
+
+        user.setPassword(passwordEncoder.encode(userRequestDTO.getPassword()));
+        user.setRole("USER");
 
         User savedUser= userRepository.save(user);
 
@@ -106,7 +112,9 @@ public class UserService {
             existingUser.setName(user.getName());
             existingUser.setEmail(user.getEmail());
             existingUser.setAge(user.getAge());
-            existingUser.setPassword(user.getPassword());
+            if (user.getPassword() != null && !user.getPassword().isBlank()) {
+                existingUser.setPassword(passwordEncoder.encode(user.getPassword()));
+            }
             User savedUser = userRepository.save(existingUser);
             return savedUser;
         }

@@ -18,6 +18,8 @@ public interface UserRepository extends JpaRepository<User,Long>, JpaSpecificati
     @Query("SELECT u FROM User u WHERE email=?1")
     Optional<User> findByEmail(String email);
 
+    Optional<User> findByEmailAndDeletedFalse(String email);
+
     @Query("SELECT u FROM User u WHERE name=?1")
     List<User> findByName(String name);
 

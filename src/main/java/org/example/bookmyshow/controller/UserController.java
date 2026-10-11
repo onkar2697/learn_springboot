@@ -9,11 +9,13 @@ import org.example.bookmyshow.dto.UserRequestDTO;
 import org.example.bookmyshow.dto.UserResponseDTO;
 import org.example.bookmyshow.entity.Booking;
 import org.example.bookmyshow.entity.User;
+import org.example.bookmyshow.mapper.UserMapper;
 import org.example.bookmyshow.projection.UserProjection;
 import org.example.bookmyshow.response.ApiResponse;
 import org.example.bookmyshow.service.UserService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.security.core.Authentication;
@@ -24,15 +26,24 @@ import java.util.List;
 @RequestMapping("/users")
 public class UserController {
     private final UserService service;
+    private final UserMapper userMapper;
 
     public UserController(UserService  service){
+
         this.service = service;
+        this.userMapper = new UserMapper();
     }
 
-      @GetMapping
-      public Page<User> getUsers(Pageable pageable) {
-          return service.getAllUsers(pageable);
-      }
+//      @GetMapping
+//      public Page<User> getUsers(Pageable pageable) {
+//          return service.getAllUsers(pageable);
+//      }
+
+    @GetMapping
+    public Page<UserResponseDTO> getUsers(Pageable pageable) {
+        return service.getAllUsers(pageable)
+                .map(userMapper::toUserResponseDTO);
+    }
 
 //    @GetMapping
 //    public Page<User> getUsers() {
@@ -40,9 +51,14 @@ public class UserController {
 //    }
 
 
-    @GetMapping("/{id:\\d+}")   //only digits will be routed
-    public User getUSerById(@PathVariable Long id){
-        return service.getUserById(id);
+//    @GetMapping("/{id:\\d+}")   //only digits will be routed
+//    public User getUSerById(@PathVariable Long id){
+//        return service.getUserById(id);
+//    }
+
+    @GetMapping("/{id:\\d+}")
+    public UserResponseDTO getUserById(@PathVariable Long id) {
+        return userMapper.toUserResponseDTO(service.getUserById(id));
     }
 
     @GetMapping("/projection")
@@ -85,6 +101,7 @@ public class UserController {
         return service.updateUser(id,user);
     }
 
+    @PreAuthorize("hasRole('ADMIN') or @userService.isOwner(#id, authentication.name)")
     @DeleteMapping("/{id}")
     public void deleteUser(@PathVariable Long id){
         service.deleteUser(id);
@@ -101,6 +118,7 @@ public class UserController {
 //        return service.updateUserAndBooking(id);
 //    }
 
+    @PreAuthorize("hasRole('ADMIN') or @userService.isOwner(#id, authentication.name)")
     @DeleteMapping("/delete/{id}")
     public String delteUserAndBooking(@PathVariable Long id){
         service.deleteUser(id);
@@ -189,6 +207,7 @@ public class UserController {
         return "Authenticated user: " + authentication.getName();
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/admin")
     public String adminEndpoint() {
         return "Welcome Admin";

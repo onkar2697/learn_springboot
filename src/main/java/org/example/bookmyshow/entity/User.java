@@ -18,6 +18,8 @@ import java.util.List;
 @EntityListeners(AuditingEntityListener.class)
 public class User {
 
+    @Column(name = "role")
+    private String role = "USER";
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)   //Let mysql/database generate the ids it generates id sequestially
     private Long  Id;                              //Using wrapper classes instead of primitive data type so default value should be null (!=0)
@@ -28,8 +30,7 @@ public class User {
     private String email;
     @Min(value = 18, message= "age must be greater than 18")
     private Integer age;
-    @NotBlank
-    @Size(min = 6,max =15, message = "Password should be greater than 6 and less than 15 characters")
+
     private String password;
 
     @CreatedDate
@@ -115,5 +116,13 @@ public class User {
 
     public void setDeleted(boolean deleted) {
         this.deleted = deleted;
+    }
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
     }
 }

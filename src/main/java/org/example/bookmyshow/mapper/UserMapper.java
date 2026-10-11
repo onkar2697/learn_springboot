@@ -3,10 +3,13 @@ package org.example.bookmyshow.mapper;
 import org.example.bookmyshow.dto.UserRequestDTO;
 import org.example.bookmyshow.dto.UserResponseDTO;
 import org.example.bookmyshow.entity.User;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 @Component
 public class UserMapper {
+
     public User toEntity(UserRequestDTO userRequestDTO){
         User user =  new User();
         user.setName(userRequestDTO.getName());
