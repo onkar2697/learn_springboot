@@ -198,4 +198,10 @@ public class UserController {
     public String userEndpoint() {
         return "Welcome User";
     }
+
+    @GetMapping("/password-check")
+    public String passwordCheck(Authentication authentication) {
+
+        return "Authenticated user: " + authentication.getName();
+    }
 }
