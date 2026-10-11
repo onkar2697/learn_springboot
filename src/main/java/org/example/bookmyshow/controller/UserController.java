@@ -14,7 +14,9 @@ import org.example.bookmyshow.response.ApiResponse;
 import org.example.bookmyshow.service.UserService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.security.core.Authentication;
 
 import java.util.List;
 
@@ -169,4 +171,13 @@ public class UserController {
         service.softDeleteTest(id);
     }
 
+    @GetMapping("/public")
+    public String publicEndpoint() {
+        return "This endpoint is public";            //for public we will get 200 ok response without creentials /users will give 401 error
+    }
+
+    @GetMapping("/auth-info")
+    public String getAuthInfo(Authentication authentication) {
+        return "Auth user: "+ authentication.getName();
+    }
 }
