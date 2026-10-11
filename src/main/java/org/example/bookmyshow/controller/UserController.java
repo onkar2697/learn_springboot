@@ -180,4 +180,22 @@ public class UserController {
     public String getAuthInfo(Authentication authentication) {
         return "Auth user: "+ authentication.getName();
     }
+
+    @GetMapping("/security-context")
+    public String getSecurityContextUser() {
+        Authentication authentication =
+                SecurityContextHolder.getContext().getAuthentication();
+
+        return "Authenticated user: " + authentication.getName();
+    }
+
+    @GetMapping("/admin")
+    public String adminEndpoint() {
+        return "Welcome Admin";
+    }
+
+    @GetMapping("/user")
+    public String userEndpoint() {
+        return "Welcome User";
+    }
 }
