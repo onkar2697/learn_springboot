@@ -49,8 +49,8 @@ public class SecurityConfig {
 
         return provider;
     }
+    //configure default user and password for test
 //    @Bean
-//    //loads user information
 //    public UserDetailsService userDetailsService(
 //            PasswordEncoder passwordEncoder) {
 //
