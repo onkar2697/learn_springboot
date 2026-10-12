@@ -72,10 +72,11 @@ public class UserService {
 //        user.setPassword(userRequestDTO.getPassword());
 //        user.setAge(userRequestDTO.getAge());
 
-        User user = userMapper.toEntity(userRequestDTO);//using mapper and redusing code complexity in service calss
+        User user = userMapper.toEntity(userRequestDTO); //using mapper and redusing code complexity in service calss
 
         user.setPassword(passwordEncoder.encode(userRequestDTO.getPassword()));
         user.setRole("USER");
+        // set the role of user and alsopassing the encoded password
 
         User savedUser= userRepository.save(user);
 
