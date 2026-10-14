@@ -45,7 +45,6 @@ public class UserService {
 
     @Transactional(readOnly = true)       // it just reads the data no modification is done
     public Page<User> getAllUsers(Pageable pageable){
-
         //return userRepository.findAllUsersWithBooking(); //used this for join Fetch Query
        // return userRepository.findAll(pageable);
         return userRepository.findByDeletedFalse(pageable);

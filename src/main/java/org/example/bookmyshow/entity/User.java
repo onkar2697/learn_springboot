@@ -14,7 +14,7 @@ import java.util.List;
 
 
 @Entity
-@Table(name = "user")
+@Table(name = "`user`")
 @EntityListeners(AuditingEntityListener.class)
 public class User {
 

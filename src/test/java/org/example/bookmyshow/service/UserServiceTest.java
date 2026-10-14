@@ -11,9 +11,11 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.util.Optional;
 
+import static org.mockito.ArgumentMatchers.any;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -24,6 +26,10 @@ public class UserServiceTest {
 
     @Mock
     UserMapper userMapper;
+
+    @Mock
+    PasswordEncoder passwordEncoder;
+
     @Mock
     UserRepository userRepository;
 
@@ -66,7 +72,12 @@ public class UserServiceTest {
         user.setAge(25);
 
         when(userMapper.toEntity(userRequestDTO)).thenReturn(user);
-        when(userRepository.save(user)).thenReturn(user);
+        //when(userRepository.save(user)).thenReturn(user);
+        when(passwordEncoder.encode("P@ssw0rd"))
+                .thenReturn("encodedPassword");
+
+        when(userRepository.save(any(User.class)))
+                .thenAnswer(invocation -> invocation.getArgument(0));
 
         UserResponseDTO userResponseDTO = new  UserResponseDTO();
         userResponseDTO.setId(user.getId());
@@ -105,12 +116,14 @@ public class UserServiceTest {
         when(userRepository.findByIdAndDeletedFalse(3L)).thenReturn(Optional.of(existingUser));
         when(userRepository.save(existingUser)).thenReturn(existingUser);
 
+        when(passwordEncoder.encode("P@ssw0rd1"))
+                .thenReturn("encodedPassword");
         User result = userService.updateUser(3L,updatedData);
 
         assertEquals("NewRoman", result.getName());
         assertEquals(26, result.getAge());
         assertEquals("new@gmail.com", result.getEmail());
-        assertEquals("P@ssw0rd1", result.getPassword());
+        assertEquals("encodedPassword", result.getPassword());
 
         verify(userRepository).save(existingUser);
         verify(userRepository).findByIdAndDeletedFalse(3L);
