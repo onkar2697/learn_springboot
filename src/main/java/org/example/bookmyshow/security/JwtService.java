@@ -59,7 +59,7 @@ public class JwtService {
     }
 
     //Validate the token
-    public boolean isValidToken(String token, String email) {
+    public boolean isTokenValid(String token, String email) {
         String tokenEmail =  extractEmail(token);
 
         return tokenEmail.equals(email)
