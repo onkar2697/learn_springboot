@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import javax.crypto.SecretKey;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
+import io.jsonwebtoken.Claims;
 
 import java.util.Date;
 
@@ -26,6 +27,7 @@ public class JwtService {
         secretKey = Keys.hmacShaKeyFor(keyBytes);
     }
 
+    //Generate the Access token
     public String generateAccessToken(String email) {
 
         Date now = new Date();
@@ -40,6 +42,28 @@ public class JwtService {
                 .expiration(expiry)
                 .signWith(secretKey)
                 .compact();
+    }
+
+    //Extracting mail from token
+    public String extractEmail(String token){
+        return extractAllClaims(token).getSubject();
+    }
+
+    //Extract the claims
+    public Claims extractAllClaims(String token){
+        return Jwts.parser()
+                .verifyWith(secretKey)
+                .build()
+                .parseSignedClaims(token)
+                .getPayload();
+    }
+
+    //Validate the token
+    public boolean isValidToken(String token, String email) {
+        String tokenEmail =  extractEmail(token);
+
+        return tokenEmail.equals(email)
+                && extractAllClaims(token).getExpiration().after(new Date());
     }
 
 }
