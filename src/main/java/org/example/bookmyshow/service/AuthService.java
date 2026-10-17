@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 
 @Service
+//Service logic for authentication
 public class AuthService {
 
     private final AuthenticationManager authenticationManager;
