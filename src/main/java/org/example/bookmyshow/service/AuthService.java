@@ -2,6 +2,8 @@ package org.example.bookmyshow.service;
 
 import org.example.bookmyshow.dto.LoginRequestDTO;
 import org.example.bookmyshow.dto.LoginResponseDTO;
+import org.example.bookmyshow.entity.User;
+import org.example.bookmyshow.repository.UserRepository;
 import org.example.bookmyshow.security.JwtService;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -14,12 +16,19 @@ public class AuthService {
 
     private final AuthenticationManager authenticationManager;
     private final JwtService jwtService;
+    public final UserRepository userRepository;
+    public final RefreshTokenService refreshTokenService;
 
     public AuthService(
             AuthenticationManager authenticationManager,
-            JwtService jwtService) {
+            JwtService jwtService,
+            UserRepository userRepository,
+            RefreshTokenService refreshTokenService) {
+
         this.authenticationManager = authenticationManager;
         this.jwtService = jwtService;
+        this.userRepository = userRepository;
+        this.refreshTokenService = refreshTokenService;
     }
 
     public LoginResponseDTO login(LoginRequestDTO request) {
@@ -31,10 +40,16 @@ public class AuthService {
                 )
         );
 
-        String accessToken = jwtService.generateAccessToken(
-                request.getEmail()
-        );
+        User user = userRepository.findByEmail(request.getEmail())
+                .orElseThrow(() ->
+                        new IllegalArgumentException("User not found"));
 
-        return new LoginResponseDTO(accessToken);
+        String accessToken =
+                jwtService.generateAccessToken(request.getEmail());
+
+        String refreshToken =
+                refreshTokenService.createRefreshToken(user);
+
+        return new LoginResponseDTO(accessToken, refreshToken);
     }
 }
