@@ -2,6 +2,9 @@ package org.example.bookmyshow.service;
 
 import org.example.bookmyshow.dto.LoginRequestDTO;
 import org.example.bookmyshow.dto.LoginResponseDTO;
+import org.example.bookmyshow.dto.RefreshTokenRequestDTO;
+import org.example.bookmyshow.dto.RefreshTokenResponseDTO;
+import org.example.bookmyshow.entity.RefreshToken;
 import org.example.bookmyshow.entity.User;
 import org.example.bookmyshow.repository.UserRepository;
 import org.example.bookmyshow.security.JwtService;
@@ -51,5 +54,19 @@ public class AuthService {
                 refreshTokenService.createRefreshToken(user);
 
         return new LoginResponseDTO(accessToken, refreshToken);
+    }
+
+    public RefreshTokenResponseDTO refreshAccessToken(RefreshTokenRequestDTO request) {
+
+        String rawToken = request.getRefreshToken();
+
+        RefreshToken refreshToken =
+                refreshTokenService.validateRefreshToken(rawToken);
+
+        String email = refreshToken.getUser().getEmail();
+        String newAccessToken = jwtService.generateAccessToken(email);
+
+        return new RefreshTokenResponseDTO(newAccessToken);
+
     }
 }

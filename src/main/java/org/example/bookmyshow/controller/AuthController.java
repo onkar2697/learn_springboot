@@ -2,6 +2,8 @@ package org.example.bookmyshow.controller;
 
 import org.example.bookmyshow.dto.LoginRequestDTO;
 import org.example.bookmyshow.dto.LoginResponseDTO;
+import org.example.bookmyshow.dto.RefreshTokenRequestDTO;
+import org.example.bookmyshow.dto.RefreshTokenResponseDTO;
 import org.example.bookmyshow.service.AuthService;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -21,5 +23,11 @@ public class AuthController {
             @RequestBody LoginRequestDTO request) {
 
         return authService.login(request);
+    }
+
+    @PostMapping("/refresh")
+    public RefreshTokenResponseDTO refreshToken(@RequestBody RefreshTokenRequestDTO request) {
+
+        return authService.refreshAccessToken(request);
     }
 }
