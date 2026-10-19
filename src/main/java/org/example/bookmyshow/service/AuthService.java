@@ -56,6 +56,7 @@ public class AuthService {
         return new LoginResponseDTO(accessToken, refreshToken);
     }
 
+    //method to get refreshtoken response DTO
     public RefreshTokenResponseDTO refreshAccessToken(RefreshTokenRequestDTO request) {
 
         String rawToken = request.getRefreshToken();

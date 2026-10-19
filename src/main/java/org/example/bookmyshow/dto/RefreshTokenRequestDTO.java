@@ -1,5 +1,6 @@
 package org.example.bookmyshow.dto;
 
+
 public class RefreshTokenRequestDTO {
 
     private String refreshToken;

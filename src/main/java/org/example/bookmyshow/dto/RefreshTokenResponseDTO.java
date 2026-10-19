@@ -1,9 +1,11 @@
 package org.example.bookmyshow.dto;
 
+
+//To get the refresh token response
 public class RefreshTokenResponseDTO {
 
     private String accessToken;
-    private String tokenType = "Bearer";
+    private String tokenType = "Bearer";  //default as bearer
 
     public RefreshTokenResponseDTO(String accessToken) {
         this.accessToken = accessToken;
