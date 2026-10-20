@@ -90,4 +90,11 @@ public class RefreshTokenService {
                     "SHA-256 is unavailable", ex);
         }
     }
+
+    @Transactional
+    public void revokeRefreshToken(String rawToken) {
+        RefreshToken refreshToken = validateRefreshToken(rawToken);
+        refreshToken.revoke();
+    }
+
 }
