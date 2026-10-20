@@ -4,6 +4,7 @@ package org.example.bookmyshow.service;
 import org.example.bookmyshow.dto.UserRequestDTO;
 import org.example.bookmyshow.dto.UserResponseDTO;
 import org.example.bookmyshow.mapper.UserMapper;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Propagation;
@@ -89,7 +90,7 @@ public class UserService {
         return userMapper.toUserResponseDTO(savedUser);
     }
 
-
+    @Cacheable(value = "users", key = "#id")
     public User getUserById(Long id){
 //        Optional<User> optionalUser = userRepository.findById(id);
 //        if(optionalUser.isPresent()){
