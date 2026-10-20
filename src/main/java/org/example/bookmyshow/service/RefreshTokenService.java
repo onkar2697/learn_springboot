@@ -91,6 +91,7 @@ public class RefreshTokenService {
         }
     }
 
+    //to revoke the token
     @Transactional
     public void revokeRefreshToken(String rawToken) {
         RefreshToken refreshToken = validateRefreshToken(rawToken);
