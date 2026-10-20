@@ -5,10 +5,12 @@ package org.example.bookmyshow.dto;
 public class RefreshTokenResponseDTO {
 
     private String accessToken;
-    private String tokenType = "Bearer";  //default as bearer
+    private String refreshToken;
+    private String tokenType = "Bearer";//default as bearer
 
-    public RefreshTokenResponseDTO(String accessToken) {
+    public RefreshTokenResponseDTO(String accessToken,  String refreshToken) {
         this.accessToken = accessToken;
+        this.refreshToken = refreshToken;
     }
 
     public String getAccessToken() {
@@ -25,5 +27,13 @@ public class RefreshTokenResponseDTO {
 
     public void setTokenType(String tokenType) {
         this.tokenType = tokenType;
+    }
+
+    public String getRefreshToken() {
+        return refreshToken;
+    }
+
+    public void setRefreshToken(String refreshToken) {
+        this.refreshToken = refreshToken;
     }
 }

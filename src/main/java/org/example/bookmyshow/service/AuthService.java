@@ -11,6 +11,7 @@ import org.example.bookmyshow.security.JwtService;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 
 @Service
@@ -56,7 +57,8 @@ public class AuthService {
         return new LoginResponseDTO(accessToken, refreshToken);
     }
 
-    //method to get refreshtoken response DTO
+    //method to get refreshtoken and rotation
+    @Transactional
     public RefreshTokenResponseDTO refreshAccessToken(RefreshTokenRequestDTO request) {
 
         String rawToken = request.getRefreshToken();
@@ -64,10 +66,16 @@ public class AuthService {
         RefreshToken refreshToken =
                 refreshTokenService.validateRefreshToken(rawToken);
 
-        String email = refreshToken.getUser().getEmail();
-        String newAccessToken = jwtService.generateAccessToken(email);
+        User user = refreshToken.getUser();
+        String email = user.getEmail();
 
-        return new RefreshTokenResponseDTO(newAccessToken);
+        refreshTokenService.revokeRefreshToken(rawToken);
+
+        String newAccessToken = jwtService.generateAccessToken(email);
+        String newRefreshToken = refreshTokenService.createRefreshToken(user);
+
+
+        return new RefreshTokenResponseDTO(newAccessToken, newRefreshToken);
 
     }
 }
