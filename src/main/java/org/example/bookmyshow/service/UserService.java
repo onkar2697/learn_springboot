@@ -4,6 +4,7 @@ package org.example.bookmyshow.service;
 import org.example.bookmyshow.dto.UserRequestDTO;
 import org.example.bookmyshow.dto.UserResponseDTO;
 import org.example.bookmyshow.mapper.UserMapper;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.transaction.annotation.Isolation;
@@ -104,6 +105,7 @@ public class UserService {
                         "User with id " + id + " not found"));  // Return a new empty User object if the user doesn't exist.
     }
 
+    @CacheEvict(value = "users", key = "#id")
     public User updateUser(Long id, User user) {
 
         Optional<User> optionalUser = userRepository.findByIdAndDeletedFalse(id);
