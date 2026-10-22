@@ -401,6 +401,7 @@ public class UserService {
         userRepository.save(user);
     }
 
+    @CacheEvict(value = "users", key = "#id")
     @Transactional
     public void softDeleteTest(Long id){
         User user = userRepository.findByIdAndDeletedFalse(id)        // soft deleting so recdord will be there in databse but as hidden or not enabled
