@@ -45,6 +45,7 @@ public interface UserRepository extends JpaRepository<User,Long>, JpaSpecificati
     @Query("SELECT u FROM User u WHERE u.id = :id")
     Optional<User> findUserForUpdate(@Param("id") Long id);
 
+    //get user by the id which are not deleted
     Optional<User> findByIdAndDeletedFalse(Long id);
 
     Page<User> findByDeletedFalse(Pageable pageable);
