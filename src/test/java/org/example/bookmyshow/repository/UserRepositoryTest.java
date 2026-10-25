@@ -12,6 +12,7 @@ import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+//Test cases for Repo
 @DataJpaTest
 public class UserRepositoryTest {
 
