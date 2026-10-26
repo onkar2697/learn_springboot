@@ -401,6 +401,10 @@ public class UserService {
         userRepository.save(user);
     }
 
+    public boolean isEmailAvailable(String email) {
+        return !userRepository.existsByEmail(email);
+    }
+
     @CacheEvict(value = "users", key = "#id")
     @Transactional
     public void softDeleteTest(Long id){

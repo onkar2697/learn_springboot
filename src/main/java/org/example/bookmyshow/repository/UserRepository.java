@@ -50,4 +50,6 @@ public interface UserRepository extends JpaRepository<User,Long>, JpaSpecificati
 
     Page<User> findByDeletedFalse(Pageable pageable);
 
+    boolean existsByEmail(String email);
+
 }
