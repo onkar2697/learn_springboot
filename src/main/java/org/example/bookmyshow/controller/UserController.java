@@ -3,10 +3,7 @@ package org.example.bookmyshow.controller;
 import jakarta.validation.Valid;
 import jakarta.websocket.server.PathParam;
 import org.example.bookmyshow.constants.AppConstants;
-import org.example.bookmyshow.dto.UserDTO;
-import org.example.bookmyshow.dto.UserRecordDTO;
-import org.example.bookmyshow.dto.UserRequestDTO;
-import org.example.bookmyshow.dto.UserResponseDTO;
+import org.example.bookmyshow.dto.*;
 import org.example.bookmyshow.entity.Booking;
 import org.example.bookmyshow.entity.User;
 import org.example.bookmyshow.mapper.UserMapper;
@@ -222,5 +219,14 @@ public class UserController {
     public String passwordCheck(Authentication authentication) {
 
         return "Authenticated user: " + authentication.getName();
+    }
+
+    @GetMapping("/email-availability")
+    public EmailAvailabilityResponse checkEmailAvailability(
+            @RequestParam String email) {
+
+        boolean available = service.isEmailAvailable(email);
+
+        return new EmailAvailabilityResponse(email, available);
     }
 }
