@@ -401,6 +401,7 @@ public class UserService {
         userRepository.save(user);
     }
 
+    //checks username / email available or not
     public boolean isEmailAvailable(String email) {
         return !userRepository.existsByEmail(email);
     }

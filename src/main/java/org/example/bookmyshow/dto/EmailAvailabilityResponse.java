@@ -1,5 +1,6 @@
 package org.example.bookmyshow.dto;
 
+//ResponseDTO for username available or not
 public class EmailAvailabilityResponse {
     String email;
     boolean available;
